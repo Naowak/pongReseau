@@ -125,7 +125,7 @@ public class Pong extends JPanel implements KeyListener {
 	public void animate() {
 		/* Update ball position */
 		ball_position.translate(ball_speed.x, ball_speed.y);
-		if (ball_position.x < 0)
+		if (ball_position.x < 0)//ici : changer en point pour joueur droit
 		{
 			ball_position.x = 0;
 			ball_speed.x = -ball_speed.x;
@@ -135,7 +135,7 @@ public class Pong extends JPanel implements KeyListener {
 			ball_position.y = 0;
 			ball_speed.y = -ball_speed.y;
 		}
-		if (ball_position.x > SIZE_PONG_X - ball_width)
+		if (ball_position.x > SIZE_PONG_X - ball_width) //ici : changer en point pour joueur gauche
 		{
 			ball_position.x = SIZE_PONG_X - ball_width;
 			ball_speed.x = -ball_speed.x;
