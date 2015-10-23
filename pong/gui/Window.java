@@ -35,7 +35,7 @@ public class Window extends JFrame {
 		while(true) {
 			pong.animate();
 			try {
-				Thread.sleep(pong.timestep);
+				Thread.sleep(Pong.timestep);
 			} catch (InterruptedException e) {};
 		}
 	}

@@ -26,7 +26,7 @@ public class Pong extends JPanel implements KeyListener {
 	 * Constant (c.f. final) common to all Pong instances (c.f. static)
 	 * defining the background color of the Pong
 	 */
-	private static final Color backgroundColor = new Color(0xFF, 0x40, 0);
+	private static final Color backgroundColor = new Color(0x77, 0x77, 0x77);
 
 	/**
 	 * Width of pong area
