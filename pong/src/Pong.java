@@ -1,4 +1,4 @@
-package pong.gui;
+package pong.src;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -130,6 +130,10 @@ public class Pong extends JPanel implements KeyListener {
 			ball_position.x = 0;
 			ball_speed.x = -ball_speed.x;
 		}
+		/*
+		 * if(Ball.colision(rack1){
+		 *    inverser vitesse
+		 * */
 		if (ball_position.y < 0)
 		{
 			ball_position.y = 0;

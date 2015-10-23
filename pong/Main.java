@@ -1,7 +1,8 @@
 package pong;
 
-import pong.gui.Window;
-import pong.gui.Pong;
+import pong.src.*;
+import pong.gui.*;
+
 
 /**
  * Starting point of the Pong application

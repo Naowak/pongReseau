@@ -1,5 +1,7 @@
 package pong.gui;
 
+import pong.src.*;
+
 import javax.swing.JFrame;
 
 /**
