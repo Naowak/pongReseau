@@ -3,8 +3,10 @@ import java.awt.Point;
 
 
 interface PongObjectInterface {
-	
-
+	/*
+	boolean collision(PongObjectInterface po);
+	debattre de ca.
+	*/
 
 	void setPosition(Point p);
 	void setPosition(int x, int y);

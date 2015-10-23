@@ -23,4 +23,8 @@ public class Ball extends PongObjectAbstract {
 	public Ball(int x, int y){
 		this(new Point(x, y));
 	}
+
+	public boolean collision(Racket r){
+		//TODO : endit
+	}
 }
