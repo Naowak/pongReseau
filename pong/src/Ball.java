@@ -19,22 +19,14 @@ public class Ball extends PongObjectAbstract {
 	private static final Point BALL_SPEED = new Point(2, 2);
 	private static final String NAME_SPRITE = "../../image/ball.png";
 
-	public Ball(Point p, Point speed){
+	public Ball(Point p){
 		setPosition(p);
 		setSize(BALL_SIZE);
-		setSpeed(speed);
+		setSpeed((Point) BALL_SPEED.clone());
 		setBelongsTo(0);
 		setImage(Toolkit.getDefaultToolkit().createImage(
 				              ClassLoader.getSystemResource("image/ball.png")));
 
-	}
-
-	public Ball(int x, int y, Point speed){
-		this(new Point(x, y), speed);
-	}
-
-	public Ball(Point p){
-		this(p, (Point)BALL_SPEED.clone());
 	}
 
 	public Ball(int x, int y){

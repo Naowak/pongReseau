@@ -43,7 +43,7 @@ public class Pong extends JPanel implements KeyListener {
 	/**
 	 * Speed of ball (in pixels per second)
 	 */
-	public static final int BALL_SPEED = 2;
+	public static final int BALL_SPEED = 2; //ball
 	/**
 	 * Speed of racket (in pixels per second)
 	 */
@@ -61,23 +61,23 @@ public class Pong extends JPanel implements KeyListener {
 	/**
 	 * Ball to be displayed
 	 */
-	private final Image ball;
+	private final Image ball; //ball
 	/**
 	 * Width of ball in pixels
 	 */
-	private int ball_width;
+	private int ball_width; //ball
 	/**
 	 * Height of ball in pixels
 	 */
-	private int ball_height;
+	private int ball_height; //ball
 	/**
 	 * Position of ball
 	 */
-	private Point ball_position = new Point(0, 0);
+	private Point ball_position = new Point(0, 0); //ball
 	/**
 	 * Speed of ball, in pixels per timestep
 	 */
-	private Point ball_speed = new Point(BALL_SPEED, BALL_SPEED);
+	private Point ball_speed = new Point(BALL_SPEED, BALL_SPEED); //ball
 
 	/**
 	 * One Racket to be displayed
@@ -104,10 +104,10 @@ public class Pong extends JPanel implements KeyListener {
 		ImageIcon icon;
 
 		this.ball = Toolkit.getDefaultToolkit().createImage(
-				ClassLoader.getSystemResource("image/ball.png"));
-		icon = new ImageIcon(ball);
-		this.ball_width = icon.getIconWidth();
-		this.ball_height = icon.getIconHeight();
+				ClassLoader.getSystemResource("image/ball.png")); //ball
+		icon = new ImageIcon(ball); //ball
+		this.ball_width = icon.getIconWidth(); //ball
+		this.ball_height = icon.getIconHeight(); //ball
 
 		this.racket = Toolkit.getDefaultToolkit().createImage(
 				ClassLoader.getSystemResource("image/racket.png"));
@@ -125,7 +125,7 @@ public class Pong extends JPanel implements KeyListener {
 	public void animate() {
 		/* Update ball position */
 		ball_position.translate(ball_speed.x, ball_speed.y);
-		if (ball_position.x < 0)//ici : changer en point pour joueur droit
+		if (ball_position.x < 0)
 		{
 			ball_position.x = 0;
 			ball_speed.x = -ball_speed.x;
