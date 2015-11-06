@@ -5,7 +5,7 @@ import java.awt.Point;
 public class Racket extends PongObjectAbstract {
 
 	private static final int RACKET_SIZE = 50;
-	private static final int RACKET_SPEED = 4;
+	private static final Point RACKET_SPEED = new Point(0, 4);
 
 	public Racket(Point p, int joueur){
 		setPosition(p);
