@@ -4,6 +4,9 @@ import java.awt.Point;
 
 public abstract class PongObjectAbstract implements PongObjectInterface {
 
+	private static final int GAUCHE = 1;
+	private static final int DROITE = 2;
+
 	public void setPosition(Point p){
 		position = (Point) p.clone();
 	}
