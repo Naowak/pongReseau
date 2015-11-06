@@ -56,10 +56,27 @@ public abstract class PongObjectAbstract implements PongObjectInterface {
 		return belongsTo;
 	}
 
+	protected void move(){
+		int x = getSpeedAbscisse() + getAbscisse();
+		int y = getSpeedOrdonnee() + getOrdonnee();
+
+		if(x < 0)
+			x = 0;
+		else if(x > Pong.SIZE_PONG_X)
+			x = Pong.SIZE_PONG_X;
+
+		if(y < 0)
+			y = 0;
+		else if(y + getSize() > Pong.SIZE_PONG_Y)
+			y = Pong.SIZE_PONG_Y - getSize();
+
+		setPosition(x,y);
+	}
 
 
-	private Point position; //point le plus hauty d'un objet
-	private int size;
+
+	private Point position; //point le plus hauty d'un objet.
+	private int size; //distance entre le point le plus haut et le plus bas.
 	private Point speed;
 	private int belongsTo;
 }

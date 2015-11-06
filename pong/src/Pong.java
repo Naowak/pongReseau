@@ -31,11 +31,11 @@ public class Pong extends JPanel implements KeyListener {
 	/**
 	 * Width of pong area
 	 */
-	private static final int SIZE_PONG_X = 800;
+	public static final int SIZE_PONG_X = 800;
 	/**
 	 * Height of pong area
 	 */
-	private static final int SIZE_PONG_Y = 600;
+	public static final int SIZE_PONG_Y = 600;
 	/**
 	 * Time step of the simulation (in ms)
 	 */

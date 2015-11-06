@@ -25,6 +25,5 @@ interface PongObjectInterface {
 	int getSpeedOrdonnee();
 	int getBelongsTo(); //A quel joueur apparient l'objet
 
-	//void update(); //Met l'objet a jour.
-	
+	void update(int type); //Met l'objet a jour.	
 }

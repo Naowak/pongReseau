@@ -56,5 +56,6 @@ public class Ball extends PongObjectAbstract {
 				setSpeedOrdonnee(-getSpeedOrdonnee());
 				break;
 		}
+		move();
 	}
 }
