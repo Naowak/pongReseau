@@ -10,6 +10,7 @@ public class Ball extends PongObjectAbstract {
 		setPosition(p);
 		setSize(BALL_SIZE);
 		setSpeed(speed);
+		setBelongsTo(0);
 	}
 
 	public Ball(int x, int y, int speed){
@@ -25,6 +26,15 @@ public class Ball extends PongObjectAbstract {
 	}
 
 	public boolean collision(Racket r){
-		//TODO : endit
+		if(r.getBelongsTo() == 1){
+			return getAbscisse() <= r.getAbscisse() 
+					&& getOrdonnee() >= r.getOrdonnee() 
+					&& getOrdonnee() <= (r.getOrdonnee() + r.getSize());
+		}
+		else if(r.getBelongsTo() == 2){
+			return getAbscisse() >= r.getAbscisse() 
+					&& getOrdonnee() >= r.getOrdonnee() 
+					&& getOrdonnee() <= (r.getOrdonnee() + r.getSize());
+		}
 	}
 }

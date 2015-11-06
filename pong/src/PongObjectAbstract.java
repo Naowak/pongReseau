@@ -17,6 +17,10 @@ public abstract class PongObjectAbstract implements PongObjectInterface {
 		speed = s;
 	}
 
+	public void setBelongsTo(int joueur){
+		belongsTo = joueur;
+	}
+
 	public Point getPosition(){
 		return (Point) position.clone();
 	}
@@ -33,9 +37,14 @@ public abstract class PongObjectAbstract implements PongObjectInterface {
 		return speed;
 	}
 
+	public int getBelongsTo(){
+		return belongsTo;
+	}
 
 
-	private Point position;
+
+	private Point position; //point le plus hauty d'un objet
 	private int size;
 	private int speed;
+	private int belongsTo;
 }

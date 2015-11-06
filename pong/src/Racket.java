@@ -7,14 +7,15 @@ public class Racket extends PongObjectAbstract {
 	private static final int RACKET_SIZE = 50;
 	private static final int RACKET_SPEED = 4;
 
-	public Racket(Point p){
+	public Racket(Point p, int joueur){
 		setPosition(p);
 		setSize(RACKET_SIZE);
 		setSpeed(RACKET_SPEED);
+		setBelongsTo(joueur);
 	}
 
-	public Racket(int x, int y){
-		this(new Point(x, y));
+	public Racket(int x, int y, int joueur){
+		this(new Point(x, y), joueur);
 	}
 	
 }
