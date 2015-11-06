@@ -1,6 +1,8 @@
 package pong.src;
 
 import java.awt.Point;
+import java.awt.Image;
+
 
 public abstract class PongObjectAbstract implements PongObjectInterface {
 
@@ -24,6 +26,9 @@ public abstract class PongObjectAbstract implements PongObjectInterface {
 	}
 	public void setSpeedOrdonnee(int sy){
 		speed.setLocation((int)speed.getX(), sy);
+	}
+	public void setImage(Image img){
+		image = img;
 	}
 
 	public void setBelongsTo(int joueur){
@@ -51,6 +56,9 @@ public abstract class PongObjectAbstract implements PongObjectInterface {
 	public int getSpeedOrdonnee(){
 		return (int)speed.getY();
 	}
+	public Image getImage(){
+		return image;
+	}
 
 	public int getBelongsTo(){
 		return belongsTo;
@@ -74,9 +82,11 @@ public abstract class PongObjectAbstract implements PongObjectInterface {
 	}
 
 
-
+	
+	private Image image;
 	private Point position; //point le plus hauty d'un objet.
 	private int size; //distance entre le point le plus haut et le plus bas.
 	private Point speed;
 	private int belongsTo;
+
 }

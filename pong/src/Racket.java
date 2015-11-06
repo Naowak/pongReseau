@@ -1,6 +1,10 @@
 package pong.src;
 
 import java.awt.Point;
+import java.awt.Image;
+import java.awt.Graphics;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class Racket extends PongObjectAbstract {
 
@@ -16,6 +20,8 @@ public class Racket extends PongObjectAbstract {
 		setSize(RACKET_SIZE);
 		setSpeed(RACKET_SPEED);
 		setBelongsTo(joueur);
+		setImage(Toolkit.getDefaultToolkit().createImage(
+				            ClassLoader.getSystemResource("image/racket.png")));
 	}
 
 	public Racket(int x, int y, int joueur){
