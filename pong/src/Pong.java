@@ -44,16 +44,16 @@ public class Pong extends JPanel implements KeyListener {
 	/**
 	 * Objet : ball
 	 */
-	public PongObjectInterface ball;
+	public Ball ball;
 
 	/**
 	 * Objet : Raquette joueur 1
 	 */
-	public PongObjectInterface racket1;
+	public Racket racket1;
 	/**
 	 * Objet : Raquette joueur 2
 	 */
-	public PongObjectInterface racket2;
+	public Racket racket2;
 
 	/**
 	 * Pixel data buffer for the Pong rendering
@@ -64,11 +64,11 @@ public class Pong extends JPanel implements KeyListener {
 	 */
 	private Graphics graphicContext = null;
 
-	private int racketMovement = DO_NOT_MOVE;
+	private int racketMovement = Racket.DO_NOT_MOVE;
 
 	public Pong() {
 		ball = new Ball(40, SIZE_PONG_Y / 2);
-		racket1 = new Racket(10, (SIZE_PONG_Y /2) - 50, 1);
+		racket1 = new Racket(20, (SIZE_PONG_Y /2) - 50, 1);
 		racket2 = new Racket(SIZE_PONG_X - 30, (SIZE_PONG_Y / 2) - 50, 2);
 
 		this.setPreferredSize(new Dimension(SIZE_PONG_X, SIZE_PONG_Y));
@@ -77,27 +77,30 @@ public class Pong extends JPanel implements KeyListener {
 
 	public void animate() {
 		racket1.update(racketMovement);
+		int ballCollision = Ball.NO_COLLISION;
 		if(ball.collision(racket1)){
-			ball.update(COLLISION_GAUCHE);
+			ballCollision = Ball.COLLISION_GAUCHE;
 		} else if (ball.collision(racket2)) {
-			ball.update(COLLISION_DROITE);
+			ballCollision = Ball.COLLISION_DROITE;
 		}
-		if(ball.getOrdonnee() <= (ball.getHeigth() / 2){
-			ball.update(COLLISION_HAUTE);
-		} else if (ball.getOrdonnee() >= SIZE_PONG_Y - (ball.getHeigth() / 2) {
-			ball.update(COLLISION_BAS);
+		if(ball.getOrdonnee() <= (ball.getImageHeigth() / 2)){
+			ballCollision = Ball.COLLISION_HAUTE;
+		} else if (ball.getOrdonnee() >= SIZE_PONG_Y - (ball.getImageHeigth() / 2)) {
+			ballCollision = Ball.COLLISION_BAS;
 		}
+		ball.update(ballCollision);
+		updateScreen();
 	}
 
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_UP:
 			case KeyEvent.VK_KP_UP:
-				racketMovement = MOVE_UP;
+				racketMovement = Racket.MOVE_UP;
 				break;
 			case KeyEvent.VK_DOWN:
 			case KeyEvent.VK_KP_DOWN:
-				racketMovement = MOVE_DOWN;
+				racketMovement = Racket.MOVE_DOWN;
 				break;
 			default:
 				System.out.println("got release "+e);
@@ -108,11 +111,11 @@ public class Pong extends JPanel implements KeyListener {
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_UP:
 			case KeyEvent.VK_KP_UP:
-				racket_speed = DO_NOT_MOVE;
+				racketMovement = Racket.DO_NOT_MOVE;
 				break;
 			case KeyEvent.VK_DOWN:
 			case KeyEvent.VK_KP_DOWN:
-				racket_speed = DO_NOT_MOVE;
+				racketMovement = Racket.DO_NOT_MOVE;
 				break;
 			default:
 				System.out.println("got release "+e);
@@ -151,13 +154,19 @@ public class Pong extends JPanel implements KeyListener {
 
 		/* Draw items */
 		graphicContext.drawImage(ball.getImage(),
-								 ball.getAbscisse() - (ball.getWidth() / 2),
-		                         ball.getOrdonnee() - (ball.getHeigth() / 2),
-		                         ball.getWigth(), ball.getHeight(), null);
+								 ball.getAbscisse() - (ball.getImageWidth() / 2),
+		                         ball.getOrdonnee() - (ball.getImageHeigth() / 2),
+		                         ball.getImageWidth(), ball.getImageHeigth(), null);
 		graphicContext.drawImage(racket1.getImage(),
-			                     racket1.getAbscisse() - (racket1.getWidth() / 2),
-			                     racket1.getOrdonnee() - (racket1.getHeigth() / 2),
-			                     racket1.getWidth(), racket1.getHeight(), null);
+			                     racket1.getAbscisse() - (racket1.getImageWidth() / 2),
+			                     racket1.getOrdonnee(),
+			                     racket1.getImageWidth(), racket1.getImageHeigth(), null);
+		graphicContext.drawImage(racket2.getImage(),
+			                     racket2.getAbscisse() - (racket2.getImageWidth() / 2),
+			                     racket2.getOrdonnee(),
+			                     racket2.getImageWidth(), racket2.getImageHeigth(), null);
 
 		this.repaint();
 	}
+
+}

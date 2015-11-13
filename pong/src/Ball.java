@@ -14,6 +14,7 @@ public class Ball extends PongObjectAbstract {
 	public static final int COLLISION_DROITE = 2;
 	public static final int COLLISION_HAUTE  = 3;
 	public static final int COLLISION_BAS = 4;
+	public static final int NO_COLLISION = 5;
 
 	private static final int BALL_SIZE = 0;
 	private static final Point BALL_SPEED = new Point(2, 2);
@@ -37,14 +38,16 @@ public class Ball extends PongObjectAbstract {
 
 	public boolean collision(Racket r){
 		if(r.getBelongsTo() == GAUCHE){
-			return getAbscisse() - (getWidth() / 2) <= r.getAbscisse() + (r.getWidth() / 2)
+			return getAbscisse() - (getImageWidth() / 2) <= r.getAbscisse() + (r.getImageWidth() / 2)
+				&& getAbscisse() - (getImageWidth() / 2) >= r.getAbscisse() - (r.getImageWidth() / 2)
 				&& getOrdonnee() >= r.getOrdonnee() 
 				&& getOrdonnee() <= (r.getOrdonnee() + r.getSize());
 		}
 		else if(r.getBelongsTo() == DROITE){
-			return getAbscisse() >= r.getAbscisse() 
-					&& getOrdonnee() >= r.getOrdonnee() 
-					&& getOrdonnee() <= (r.getOrdonnee() + r.getSize());
+			return getAbscisse() + (getImageWidth() / 2) >= r.getAbscisse() - (r.getImageWidth() / 2)
+				&& getAbscisse() + (getImageWidth() / 2) <= r.getAbscisse() + (r.getImageWidth() / 2)
+				&& getOrdonnee() >= r.getOrdonnee() 
+				&& getOrdonnee() <= (r.getOrdonnee() + r.getSize());
 		}
 		return false;
 	}
@@ -59,7 +62,11 @@ public class Ball extends PongObjectAbstract {
 			case 4:
 				setSpeedOrdonnee(-getSpeedOrdonnee());
 				break;
+			default:
+				break;
 		}
 		move();
+		System.out.println(getPosition());
 	}
 }
+
