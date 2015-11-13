@@ -27,6 +27,8 @@ public class Ball extends PongObjectAbstract {
 		setImage(Toolkit.getDefaultToolkit().createImage(
 				              ClassLoader.getSystemResource("image/ball.png")));
 
+		initHeigthWidth();
+
 	}
 
 	public Ball(int x, int y){
@@ -35,9 +37,9 @@ public class Ball extends PongObjectAbstract {
 
 	public boolean collision(Racket r){
 		if(r.getBelongsTo() == GAUCHE){
-			return getAbscisse() <= r.getAbscisse() 
-					&& getOrdonnee() >= r.getOrdonnee() 
-					&& getOrdonnee() <= (r.getOrdonnee() + r.getSize());
+			return getAbscisse() - (getWidth() / 2) <= r.getAbscisse() + (r.getWidth() / 2)
+				&& getOrdonnee() >= r.getOrdonnee() 
+				&& getOrdonnee() <= (r.getOrdonnee() + r.getSize());
 		}
 		else if(r.getBelongsTo() == DROITE){
 			return getAbscisse() >= r.getAbscisse() 

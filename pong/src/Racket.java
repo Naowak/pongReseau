@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 
 public class Racket extends PongObjectAbstract {
 
-	private static final int RACKET_SIZE = 50;
+	private static final int RACKET_SIZE = 100;
 	private static final Point RACKET_SPEED = new Point(0, 4);
 
 	public static final int DO_NOT_MOVE = 1;
@@ -20,8 +20,14 @@ public class Racket extends PongObjectAbstract {
 		setSize(RACKET_SIZE);
 		setSpeed(RACKET_SPEED);
 		setBelongsTo(joueur);
-		setImage(Toolkit.getDefaultToolkit().createImage(
-				            ClassLoader.getSystemResource("image/racket.png")));
+		if(joueur == 1)
+			setImage(Toolkit.getDefaultToolkit().createImage(
+				           ClassLoader.getSystemResource("image/racket1.png")));
+		else if(joueur == 2)
+			setImage(Toolkit.getDefaultToolkit().createImage(
+				           ClassLoader.getSystemResource("image/racket2.png")));
+
+		initHeigthWidth();
 	}
 
 	public Racket(int x, int y, int joueur){

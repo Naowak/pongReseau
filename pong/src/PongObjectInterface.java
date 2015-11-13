@@ -29,4 +29,5 @@ interface PongObjectInterface {
 	int getBelongsTo(); //A quel joueur apparient l'objet
 
 	void update(int type); //Met l'objet a jour.	
+	void draw();
 }
