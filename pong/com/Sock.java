@@ -3,6 +3,8 @@ package pong.com;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.io.*;
+
 
 public class Sock{
 
@@ -23,13 +25,22 @@ public class Sock{
 			}
 
 		}
-		inStream  = socket.getInputStream();
-		outStream = socket.getOutputStream();
+		try{
+			inStream  = socket.getInputStream();
+			outStream = socket.getOutputStream();
+		} catch (IOException e) {
+			System.out.println(e);
+		}
 	}
 
 	public int communicate(int envoyer){
-		outStream.write(envoyer);
-		return inStream.read();
+		try{
+			outStream.write(envoyer);
+			return inStream.read();
+		} catch (IOException e) {
+			System.out.println(e);
+			return -1;
+		}
 	}
 
 	public void close(){
@@ -46,10 +57,10 @@ public class Sock{
 	public static void main(String argv[]){
 		Sock my_Sock = new Sock(argv[0]);
 
-		System.out.println(communicate(1));
-		System.out.println(communicate(2));
-		System.out.println(communicate(3));
-		System.out.println(communicate(4));
+		System.out.println(my_Sock.communicate(1));
+		System.out.println(my_Sock.communicate(2));
+		System.out.println(my_Sock.communicate(3));
+		System.out.println(my_Sock.communicate(4));
 
 		my_Sock.close();
 	}
