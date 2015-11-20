@@ -9,7 +9,11 @@ import pong.gui.*;
  */
 public class Main  {
 	public static void main(String[] args) {
-		Pong pong = new Pong();
+		if(args.length != 1){
+			System.out.println("usage: java Main [ip adress]");
+			System.exit(0);
+		}
+		Pong pong = new Pong(args[0]);
 		Window window = new Window(pong);
 		window.displayOnscreen();
 	}

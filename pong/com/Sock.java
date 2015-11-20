@@ -43,6 +43,10 @@ public class Sock{
 		}
 	}
 
+	public boolean isHost(){
+		return servSocket != null;
+	}
+
 	public void close(){
 		try{
 			if(socket != null)
@@ -54,7 +58,7 @@ public class Sock{
 		}
 	}
 
-	public static void main(String argv[]){
+	/*public static void main(String argv[]){
 		Sock my_Sock = new Sock(argv[0]);
 
 		System.out.println(my_Sock.communicate(1));
@@ -63,7 +67,7 @@ public class Sock{
 		System.out.println(my_Sock.communicate(4));
 
 		my_Sock.close();
-	}
+	}*/
 
 
 	private final static int PORT = 10654;

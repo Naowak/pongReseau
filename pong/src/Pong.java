@@ -64,12 +64,25 @@ public class Pong extends JPanel implements KeyListener {
 	 */
 	private Graphics graphicContext = null;
 
-	private int racketMovement = Racket.DO_NOT_MOVE;
+	private int racketMovement  = Racket.DO_NOT_MOVE;
+	private int racket2Movement = Racket.DO_NOT_MOVE;
 
-	public Pong() {
-		ball = new Ball(40, SIZE_PONG_Y / 2);
+	private Sock socket;
+
+	public Pong(String ipv4) {
+		socket = new Sock(ipv4);
+
+		if(socket.isHost())
+			ball = new Ball(40, SIZE_PONG_Y / 2);
+		else{
+			ball = new Ball(SIZE_PONG_X - 40, SIZE_PONG_Y / 2);
+			ball.setSpeedAbscisse(- ball.getSpeedAbscisse());
+		}
+
+
 		racket1 = new Racket(20, (SIZE_PONG_Y /2) - 50, 1);
 		racket2 = new Racket(SIZE_PONG_X - 30, (SIZE_PONG_Y / 2) - 50, 2);
+
 
 		this.setPreferredSize(new Dimension(SIZE_PONG_X, SIZE_PONG_Y));
 		this.addKeyListener(this);
@@ -77,6 +90,10 @@ public class Pong extends JPanel implements KeyListener {
 
 	public void animate() {
 		racket1.update(racketMovement);
+		racket2Movement = socket.communicate(racketMovement);
+		racket2.update(racket2Movement);
+
+
 		int ballCollision = Ball.NO_COLLISION;
 		if(ball.collision(racket1)){
 			ballCollision = Ball.COLLISION_GAUCHE;
