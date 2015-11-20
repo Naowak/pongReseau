@@ -9,6 +9,7 @@ public class Sock{
 	public Sock(String ipv4){
 		try{
 			socket = new Socket(ipv4, PORT);
+			System.out.println("Connection to host successfull.");
 		} catch (IOException e) {
 			System.out.println(e);
 			System.out.println("Creation d'un ServerSocket");
@@ -45,3 +46,5 @@ public class Sock{
 	private static Socket socket;
 	private static ServerSocket servSocket;
 }
+
+// 10.3.7.126
