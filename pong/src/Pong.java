@@ -14,6 +14,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import pong.com.Sock;
+
 /**
  * An Pong is a Java graphical container that extends the JPanel class in
  * order to display graphical elements.
