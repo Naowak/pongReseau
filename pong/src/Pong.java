@@ -11,6 +11,8 @@ import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import java.util.ArrayList;
 import java.util.List;
+//import java.lang.Oject;
+import java.time.Instant;
 
 import javax.swing.JPanel;
 
@@ -86,6 +88,12 @@ public class Pong extends JPanel implements KeyListener {
 	private int pointsJoueurGauche;	
 	private int pointsJoueurDroite;
 
+	/** 
+	 * Temps avant lequel la balel ne bouge pas
+	 */
+	private Instant restartTime;
+
+
 	private Sock socket;
 
 	public Pong(String ipv4) {
@@ -100,6 +108,7 @@ public class Pong extends JPanel implements KeyListener {
 
 		pointsJoueurGauche = 0;
 		pointsJoueurGauche = 0;
+		restartTime = Instant.now();
 
 		racket1 = new Racket(20, (SIZE_PONG_Y /2) - 50, 1);
 		racket2 = new Racket(SIZE_PONG_X - 30, (SIZE_PONG_Y / 2) - 50, 2);
@@ -117,6 +126,14 @@ public class Pong extends JPanel implements KeyListener {
 		racket1.update(racketMovement);
 		racket2Movement = socket.communicate(racketMovement);
 		racket2.update(racket2Movement);
+
+		if((Instant.now()).isAfter(restartTime)) {
+			updateScreen();
+			return;
+		} else if(ball.getSpeedAbscisse() == 0) {
+			ball.setSpeedAbscisse(5);
+			ball.setSpeedOrdonnee(3);
+		}
 
 		int ballCollision = Ball.NO_COLLISION;
 		if(ball.collision(racket1)){
@@ -161,6 +178,7 @@ public class Pong extends JPanel implements KeyListener {
 			imagePoints2 = Toolkit.getDefaultToolkit().createImage(
 				                   ClassLoader.getSystemResource(newImageFile));
 		}
+		restartTime = restartTime.plusSeconds(2);
 
 
 
