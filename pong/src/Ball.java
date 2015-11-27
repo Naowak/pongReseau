@@ -55,18 +55,26 @@ public class Ball extends PongObjectAbstract {
 	public void update(int type){
 		switch(type){
 			case 1:
+				if(getSpeedAbscisse() < 0)
+					setSpeedAbscisse(-getSpeedAbscisse());
+				break
 			case 2:
-				setSpeedAbscisse(-getSpeedAbscisse());
+				if(getSpeedAbscisse() > 0)
+					setSpeedAbscisse(-getSpeedAbscisse());
 				break;
 			case 3:
+				if(getSpeedOrdonnee() < 0)
+					setSpeedOrdonnee(-getSpeedOrdonnee());
+				break;
 			case 4:
-				setSpeedOrdonnee(-getSpeedOrdonnee());
+				if(getSpeedOrdonnee() > 0)
+					setSpeedOrdonnee(-getSpeedOrdonnee());
 				break;
 			default:
 				break;
 		}
 		move();
-		System.out.println(getPosition());
+		//System.out.println(getPosition());
 	}
 }
 
