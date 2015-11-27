@@ -57,7 +57,7 @@ public class Ball extends PongObjectAbstract {
 			case 1:
 				if(getSpeedAbscisse() < 0)
 					setSpeedAbscisse(-getSpeedAbscisse());
-				break
+				break;
 			case 2:
 				if(getSpeedAbscisse() > 0)
 					setSpeedAbscisse(-getSpeedAbscisse());
