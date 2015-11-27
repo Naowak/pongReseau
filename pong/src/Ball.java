@@ -17,7 +17,7 @@ public class Ball extends PongObjectAbstract {
 	public static final int NO_COLLISION = 5;
 
 	private static final int BALL_SIZE = 0;
-	private static final Point BALL_SPEED = new Point(2, 2);
+	private static final Point BALL_SPEED = new Point(5, 3);
 	private static final String NAME_SPRITE = "../../image/ball.png";
 
 	public Ball(Point p){
