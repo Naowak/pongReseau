@@ -43,6 +43,9 @@ public class Pong extends JPanel implements KeyListener {
 	 */
 	public static final int timestep = 10;
 
+	public static final int JOUEUR_GAUCHE = 1;
+	public static final int JOUEUR_DROITE = 2;
+
 	/**
 	 * Objet : ball
 	 */
@@ -56,6 +59,14 @@ public class Pong extends JPanel implements KeyListener {
 	 * Objet : Raquette joueur 2
 	 */
 	public Racket racket2;
+	/**
+	 * Object : Affichage des points du joueur 1
+	 */
+	public Image imagePoints1;
+	/**
+	 * Object : Affichage des points du joueur 2
+	 */
+	public Image imagePoints2;
 
 	/**
 	 * Pixel data buffer for the Pong rendering
@@ -69,6 +80,12 @@ public class Pong extends JPanel implements KeyListener {
 	private int racketMovement  = Racket.DO_NOT_MOVE;
 	private int racket2Movement = Racket.DO_NOT_MOVE;
 
+	/**
+	 * Points des joueurs
+	 */	
+	private int pointsJoueurGauche;	
+	private int pointsJoueurDroite;
+
 	private Sock socket;
 
 	public Pong(String ipv4) {
@@ -81,10 +98,16 @@ public class Pong extends JPanel implements KeyListener {
 			ball.setSpeedAbscisse(- ball.getSpeedAbscisse());
 		}
 
+		pointsJoueurGauche = 0;
+		pointsJoueurGauche = 0;
 
 		racket1 = new Racket(20, (SIZE_PONG_Y /2) - 50, 1);
 		racket2 = new Racket(SIZE_PONG_X - 30, (SIZE_PONG_Y / 2) - 50, 2);
 
+		imagePoints1 = Toolkit.getDefaultToolkit().createImage(
+				            ClassLoader.getSystemResource("image/0_rouge.png"));
+		imagePoints2 = Toolkit.getDefaultToolkit().createImage(
+				            ClassLoader.getSystemResource("image/0_vert.png"));
 
 		this.setPreferredSize(new Dimension(SIZE_PONG_X, SIZE_PONG_Y));
 		this.addKeyListener(this);
@@ -94,7 +117,6 @@ public class Pong extends JPanel implements KeyListener {
 		racket1.update(racketMovement);
 		racket2Movement = socket.communicate(racketMovement);
 		racket2.update(racket2Movement);
-
 
 		int ballCollision = Ball.NO_COLLISION;
 		if(ball.collision(racket1)){
@@ -108,7 +130,40 @@ public class Pong extends JPanel implements KeyListener {
 			ballCollision = Ball.COLLISION_BAS;
 		}
 		ball.update(ballCollision);
+
+		if(ball.getAbscisse() < 0)
+			pointMarque(JOUEUR_DROITE);
+		else if (ball.getAbscisse() >= SIZE_PONG_X)
+			pointMarque(JOUEUR_GAUCHE);
+
 		updateScreen();
+	}
+
+	public void pointMarque(int joueur) {
+		ball.setSpeedAbscisse(0);
+		ball.setSpeedOrdonnee(0);
+		ball.setPosition(ball.getAbscisse(), SIZE_PONG_Y / 2);
+		if(joueur == JOUEUR_GAUCHE){
+			ball.setPosition(SIZE_PONG_X - 40, ball.getOrdonnee());
+			pointsJoueurGauche += 1;
+			String newImageFile = "image/";
+			newImageFile += Integer.toString(pointsJoueurGauche);
+			newImageFile += "_rouge.png";
+			imagePoints1 = Toolkit.getDefaultToolkit().createImage(
+				                   ClassLoader.getSystemResource(newImageFile));
+		}
+		else if(joueur == JOUEUR_DROITE){
+			ball.setPosition(40, ball.getOrdonnee());
+			pointsJoueurDroite += 1;
+			String newImageFile = "image/";
+			newImageFile += Integer.toString(pointsJoueurDroite);
+			newImageFile += "_vert.png";
+			imagePoints2 = Toolkit.getDefaultToolkit().createImage(
+				                   ClassLoader.getSystemResource(newImageFile));
+		}
+
+
+
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -168,10 +223,17 @@ public class Pong extends JPanel implements KeyListener {
 				graphicContext = buffer.getGraphics();
 		}
 		/* Fill the area with blue */
-		graphicContext.setColor(backgroundColor);
+		graphicContext.setColor(backgroundColor); 
 		graphicContext.fillRect(0, 0, SIZE_PONG_X, SIZE_PONG_Y);
 
 		/* Draw items */
+		graphicContext.drawImage(imagePoints1, 
+								 300, 50,
+								 50, 50, null);
+		graphicContext.drawImage(imagePoints2, 
+								 450, 50,
+								 50, 50, null);
+
 		graphicContext.drawImage(ball.getImage(),
 								 ball.getAbscisse() - (ball.getImageWidth() / 2),
 		                         ball.getOrdonnee() - (ball.getImageHeigth() / 2),

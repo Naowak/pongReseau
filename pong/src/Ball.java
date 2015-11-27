@@ -13,8 +13,8 @@ public class Ball extends PongObjectAbstract {
 	public static final int COLLISION_GAUCHE = 1;
 	public static final int COLLISION_DROITE = 2;
 	public static final int COLLISION_HAUTE  = 3;
-	public static final int COLLISION_BAS = 4;
-	public static final int NO_COLLISION = 5;
+	public static final int COLLISION_BAS    = 4;
+	public static final int NO_COLLISION     = 5;
 
 	private static final int BALL_SIZE = 0;
 	private static final Point BALL_SPEED = new Point(5, 3);
