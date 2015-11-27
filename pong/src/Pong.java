@@ -92,6 +92,10 @@ public class Pong extends JPanel implements KeyListener {
 	 * Temps avant lequel la balel ne bouge pas
 	 */
 	private Instant restartTime;
+	/**
+	 * La balle ne part que si ce bolleen est a vrai
+	 */
+	private boolean weCanGo;
 
 
 	private Sock socket;
@@ -109,9 +113,10 @@ public class Pong extends JPanel implements KeyListener {
 		pointsJoueurGauche = 0;
 		pointsJoueurGauche = 0;
 		restartTime = Instant.now();
+		weCanGo = false;
 
 		racket1 = new Racket(20, (SIZE_PONG_Y /2) - 50, 1);
-		racket2 = new Racket(SIZE_PONG_X - 30, (SIZE_PONG_Y / 2) - 50, 2);
+		racket2 = new Racket(SIZE_PONG_X - 20, (SIZE_PONG_Y / 2) - 50, 2);
 
 		imagePoints1 = Toolkit.getDefaultToolkit().createImage(
 				            ClassLoader.getSystemResource("image/0_rouge.png"));
@@ -122,17 +127,22 @@ public class Pong extends JPanel implements KeyListener {
 		this.addKeyListener(this);
 	}
 
-	public void animate() {
+	public boolean animate() {
 		racket1.update(racketMovement);
 		racket2Movement = socket.communicate(racketMovement);
 		racket2.update(racket2Movement);
 
-		if((Instant.now()).isAfter(restartTime)) {
+		if((Instant.now()).isBefore(restartTime)) {
 			updateScreen();
-			return;
+			return true; // On continue a jouer
 		} else if(ball.getSpeedAbscisse() == 0) {
-			ball.setSpeedAbscisse(5);
-			ball.setSpeedOrdonnee(3);
+			if(ball.getAbscisse() < SIZE_PONG_X / 2){
+				ball.setSpeedAbscisse(5);
+				ball.setSpeedOrdonnee(3);
+			} else {
+				ball.setSpeedAbscisse(-5);
+				ball.setSpeedOrdonnee(-3);
+			}
 		}
 
 		int ballCollision = Ball.NO_COLLISION;
@@ -153,7 +163,31 @@ public class Pong extends JPanel implements KeyListener {
 		else if (ball.getAbscisse() >= SIZE_PONG_X)
 			pointMarque(JOUEUR_GAUCHE);
 
+		if(pointsJoueurGauche > 7) {
+			printVictoire(JOUEUR_GAUCHE);
+			return false; // Fin du jeu
+		} else if(pointsJoueurDroite > 7) {
+			printVictoire(JOUEUR_DROITE);
+			return false; // Fin du jeu
+		}
+
 		updateScreen();
+		return true; // On continue a jouer
+	}
+
+	public void printVictoire(int gagnant) {
+		graphicContext.setColor(backgroundColor); 
+		graphicContext.fillRect(0, 0, SIZE_PONG_X, SIZE_PONG_Y);
+		Image panda;
+		if(gagnant == JOUEUR_GAUCHE)
+			panda = Toolkit.getDefaultToolkit().createImage(
+				             ClassLoader.getSystemResource("image/youWin.png"));
+		else
+			panda = Toolkit.getDefaultToolkit().createImage(
+				            ClassLoader.getSystemResource("image/youLose.png"));
+		graphicContext.drawImage(panda, 0, 0, SIZE_PONG_X, SIZE_PONG_Y, null);
+
+		this.repaint();
 	}
 
 	public void pointMarque(int joueur) {
@@ -161,7 +195,7 @@ public class Pong extends JPanel implements KeyListener {
 		ball.setSpeedOrdonnee(0);
 		ball.setPosition(ball.getAbscisse(), SIZE_PONG_Y / 2);
 		if(joueur == JOUEUR_GAUCHE){
-			ball.setPosition(SIZE_PONG_X - 60, ball.getOrdonnee());
+			ball.setPosition(SIZE_PONG_X - 40, ball.getOrdonnee());
 			pointsJoueurGauche += 1;
 			String newImageFile = "image/";
 			newImageFile += Integer.toString(pointsJoueurGauche);
@@ -178,7 +212,7 @@ public class Pong extends JPanel implements KeyListener {
 			imagePoints2 = Toolkit.getDefaultToolkit().createImage(
 				                   ClassLoader.getSystemResource(newImageFile));
 		}
-		restartTime = restartTime.plusSeconds(2);
+		restartTime = (Instant.now()).plusSeconds(2);
 
 
 
@@ -240,7 +274,7 @@ public class Pong extends JPanel implements KeyListener {
 			else
 				graphicContext = buffer.getGraphics();
 		}
-		/* Fill the area with blue */
+		/* Fill the area with grey */
 		graphicContext.setColor(backgroundColor); 
 		graphicContext.fillRect(0, 0, SIZE_PONG_X, SIZE_PONG_Y);
 

@@ -35,8 +35,7 @@ public class Window extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 
-		while(true) {
-			pong.animate();
+		while(pong.animate()) {
 			try {
 				Thread.sleep(Pong.timestep);
 			} catch (InterruptedException e) {};
