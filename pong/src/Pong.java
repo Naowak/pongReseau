@@ -144,7 +144,7 @@ public class Pong extends JPanel implements KeyListener {
 		ball.setSpeedOrdonnee(0);
 		ball.setPosition(ball.getAbscisse(), SIZE_PONG_Y / 2);
 		if(joueur == JOUEUR_GAUCHE){
-			ball.setPosition(SIZE_PONG_X - 40, ball.getOrdonnee());
+			ball.setPosition(SIZE_PONG_X - 60, ball.getOrdonnee());
 			pointsJoueurGauche += 1;
 			String newImageFile = "image/";
 			newImageFile += Integer.toString(pointsJoueurGauche);
