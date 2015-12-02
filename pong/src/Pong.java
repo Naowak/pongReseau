@@ -132,10 +132,11 @@ public class Pong extends JPanel implements KeyListener {
 		racket2Movement = socket.communicate(racketMovement);
 		racket2.update(racket2Movement);
 
-		if((Instant.now()).isBefore(restartTime)) {
+		/*if((Instant.now()).isBefore(restartTime)) { //emire tentative d'attente
 			updateScreen();
 			return true; // On continue a jouer
-		} else if(ball.getSpeedAbscisse() == 0) {
+		} else */
+		if(ball.getSpeedAbscisse() == 0) {
 			if(ball.getAbscisse() < SIZE_PONG_X / 2){
 				ball.setSpeedAbscisse(5);
 				ball.setSpeedOrdonnee(3);
@@ -212,7 +213,7 @@ public class Pong extends JPanel implements KeyListener {
 			imagePoints2 = Toolkit.getDefaultToolkit().createImage(
 				                   ClassLoader.getSystemResource(newImageFile));
 		}
-		restartTime = (Instant.now()).plusSeconds(2);
+		//restartTime = (Instant.now()).plusSeconds(2);
 
 
 
