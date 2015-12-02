@@ -141,7 +141,7 @@ public class Pong extends JPanel implements KeyListener {
 				ball.setSpeedOrdonnee(3);
 			} else {
 				ball.setSpeedAbscisse(-5);
-				ball.setSpeedOrdonnee(-3);
+				ball.setSpeedOrdonnee(3);
 			}
 		}
 
