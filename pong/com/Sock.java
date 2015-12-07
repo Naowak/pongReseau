@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.*;
-
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.net.SocketException;
 
 public class Sock{
 
@@ -23,7 +25,6 @@ public class Sock{
 			} catch (IOException e2) {
 				System.out.println(e2);
 			}
-
 		}
 		try{
 			inStream  = socket.getInputStream();
@@ -31,15 +32,33 @@ public class Sock{
 		} catch (IOException e) {
 			System.out.println(e);
 		}
-	}
-
-	public int communicate(int envoyer){
 		try{
-			outStream.write(envoyer);
-			return inStream.read();
+			socket.setTcpNoDelay(true);
+		} catch (SocketException e) {
+			System.out.println(e);
+		}
+		try{
+			oos = new ObjectOutputStream(outStream); 
+			System.out.println(oos);
+			ois = new ObjectInputStream(inStream);
+			System.out.println(ois);
 		} catch (IOException e) {
 			System.out.println(e);
-			return -1;
+		}
+	}
+
+	public Object communicate(Object toSend){
+		try{
+			oos.writeObject(toSend);
+			Object reception = new Object();
+			reception = (Object)ois.readObject();
+			return reception;
+		} catch (IOException e) {
+			System.out.println(e);
+			return null;
+		} catch (ClassNotFoundException e) {
+			System.out.println(e);
+			return null;
 		}
 	}
 
@@ -76,6 +95,8 @@ public class Sock{
 
 	private InputStream inStream;
 	private OutputStream outStream;
+	private ObjectInputStream ois;
+	private ObjectOutputStream oos;
+
 }
 
-// 10.3.7.126
