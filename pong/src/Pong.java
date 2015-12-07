@@ -165,11 +165,11 @@ public class Pong extends JPanel implements KeyListener {
         if (ball.getAbscisse() >= SIZE_PONG_X)
             pointMarque(JOUEUR_GAUCHE);
 
-        if(pointsJoueurGauche > 7) {
+        if(pointsJoueurGauche > 2) {
             printVictoire(JOUEUR_GAUCHE);
             return false; // Fin du jeu
         } 
-        if(pointsJoueurDroite > 7) {
+        if(pointsJoueurDroite > 2) {
             printVictoire(JOUEUR_DROITE);
             return false; // Fin du jeu
         }
@@ -225,14 +225,17 @@ public class Pong extends JPanel implements KeyListener {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
             case KeyEvent.VK_KP_UP:
+            case KeyEvent.VK_Z:
+            case KeyEvent.VK_W:
                 racketMovement = Racket.MOVE_UP;
                 break;
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_KP_DOWN:
+            case KeyEvent.VK_S:
                 racketMovement = Racket.MOVE_DOWN;
                 break;
             default:
-                System.out.println("got release "+e);
+                System.out.println("Pressing this doesn't do anything ......");
         }
     }
 
@@ -240,14 +243,15 @@ public class Pong extends JPanel implements KeyListener {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
             case KeyEvent.VK_KP_UP:
+            case KeyEvent.VK_Z:
+            case KeyEvent.VK_W:
                 racketMovement = Racket.DO_NOT_MOVE;
                 break;
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_KP_DOWN:
+            case KeyEvent.VK_S:
                 racketMovement = Racket.DO_NOT_MOVE;
                 break;
-            default:
-                System.out.println("got release "+e);
         }
     }
 

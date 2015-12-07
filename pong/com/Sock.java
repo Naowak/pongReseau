@@ -15,35 +15,34 @@ public class Sock{
 			socket = new Socket(ipv4, PORT);
 			System.out.println("Connection to host successfull.");
 		} catch (IOException e) {
-			System.out.println(e);
-			System.out.println("Creation d'un ServerSocket");
+			System.out.println("Being host, waiting for stranger's connection.");
 			try{
 				servSocket = new ServerSocket(PORT);
 				socket = servSocket.accept();
-				System.out.println("Client accepte, debut de connection.");
-				System.out.println(socket.toString());
+				System.out.println("Client accepted, communication starts.");
 			} catch (IOException e2) {
-				System.out.println(e2);
+				System.out.println("Connection failed, don't know why :/");
+				System.exit(1);
 			}
 		}
 		try{
 			inStream  = socket.getInputStream();
 			outStream = socket.getOutputStream();
 		} catch (IOException e) {
-			System.out.println(e);
+			System.out.println("Error: Sock.java: unable to open streams");
+			System.exit(1);
 		}
 		try{
 			socket.setTcpNoDelay(true);
 		} catch (SocketException e) {
-			System.out.println(e);
+			System.out.println("Warning: Sock.java: unable to disable Nagle's algorithme");
 		}
 		try{
 			oos = new ObjectOutputStream(outStream); 
-			System.out.println(oos);
 			ois = new ObjectInputStream(inStream);
-			System.out.println(ois);
 		} catch (IOException e) {
-			System.out.println(e);
+			System.out.println("Error: Sock.java: unable to open Object streams");
+			System.exit(1);
 		}
 	}
 
@@ -53,12 +52,20 @@ public class Sock{
 			Object reception = new Object();
 			reception = (Object)ois.readObject();
 			return reception;
+		} catch (SocketException e){
+			System.out.println("Your partner just leaved the game.");
+			System.exit(1);
+			return null; //Never read this line, but never compile if not present ...
 		} catch (IOException e) {
+			System.out.println("Error: Sock.communicate: cannot communicate.");
 			System.out.println(e);
-			return null;
+			System.exit(1);
+			return null; //Never read this line, but never compile if not present ...
 		} catch (ClassNotFoundException e) {
+			System.out.println("Error: Sock.communicate: cannot communicate.");
 			System.out.println(e);
-			return null;
+			System.exit(1);
+			return null; //Never read this line, but never compile if not present ...
 		}
 	}
 
@@ -73,20 +80,10 @@ public class Sock{
 			if(servSocket != null)
 				servSocket.close();
 		} catch (IOException e) {
+			System.out.println("Unable to close streams.");
 			System.out.println(e);
 		}
 	}
-
-	/*public static void main(String argv[]){
-		Sock my_Sock = new Sock(argv[0]);
-
-		System.out.println(my_Sock.communicate(1));
-		System.out.println(my_Sock.communicate(2));
-		System.out.println(my_Sock.communicate(3));
-		System.out.println(my_Sock.communicate(4));
-
-		my_Sock.close();
-	}*/
 
 
 	private final static int PORT = 10654;
