@@ -11,13 +11,11 @@ import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import java.util.ArrayList;
 import java.util.List;
-//import java.lang.Oject;
 import java.time.Instant;
 
 import javax.swing.JPanel;
 
 import pong.com.Sock;
-import pong.com.CommunicationStruct;
 
 /**
  * An Pong is a Java graphical container that extends the JPanel class in
