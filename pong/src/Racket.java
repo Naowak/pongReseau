@@ -23,7 +23,7 @@ public class Racket extends PongObjectAbstract {
 		if(joueur == 1)
 			setImage(Toolkit.getDefaultToolkit().createImage(
 				           ClassLoader.getSystemResource("image/racket1.png")));
-		else if(joueur == 2)
+		if(joueur == 2)
 			setImage(Toolkit.getDefaultToolkit().createImage(
 				           ClassLoader.getSystemResource("image/racket2.png")));
 

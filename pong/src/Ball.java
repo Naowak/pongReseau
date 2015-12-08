@@ -10,11 +10,17 @@ import javax.swing.ImageIcon;
 
 public class Ball extends PongObjectAbstract {
 
-	public static final int COLLISION_GAUCHE = 1;
-	public static final int COLLISION_DROITE = 2;
-	public static final int COLLISION_HAUTE  = 3;
-	public static final int COLLISION_BAS    = 4;
-	public static final int NO_COLLISION     = 5;
+	public static final int COLLISION_GAUCHE        = 11;
+	public static final int COLLISION_GAUCHE_STABLE = 11;
+	public static final int COLLISION_GAUCHE_MONTE  = 12;
+	public static final int COLLISION_GAUCHE_DECEND = 13;
+	public static final int COLLISION_DROITE        = 21;
+	public static final int COLLISION_DROITE_STABLE = 21;
+	public static final int COLLISION_DROITE_MONTE  = 22;
+	public static final int COLLISION_DROITE_DECEND = 23;
+	public static final int COLLISION_HAUTE         = 31;
+	public static final int COLLISION_BAS           = 41;
+	public static final int NO_COLLISION            = 51;
 
 	private static final int BALL_SIZE = 0;
 	private static final Point BALL_SPEED = new Point(5, 3);
@@ -36,37 +42,60 @@ public class Ball extends PongObjectAbstract {
 		this(new Point(x, y));
 	}
 
-	public boolean collision(Racket r){
-		if(r.getBelongsTo() == GAUCHE){
+	public boolean collision(Racket r) {
+		if(r.getBelongsTo() == GAUCHE) {
 			return getAbscisse() - (getImageWidth() / 2) <= r.getAbscisse() + (r.getImageWidth() / 2)
 				&& getAbscisse() - (getImageWidth() / 2) >= r.getAbscisse() - (r.getImageWidth() / 2)
 				&& getOrdonnee() >= r.getOrdonnee() 
 				&& getOrdonnee() <= (r.getOrdonnee() + r.getSize());
 		}
-		else if(r.getBelongsTo() == DROITE){
+		else {
 			return getAbscisse() + (getImageWidth() / 2) >= r.getAbscisse() - (r.getImageWidth() / 2)
 				&& getAbscisse() + (getImageWidth() / 2) <= r.getAbscisse() + (r.getImageWidth() / 2)
 				&& getOrdonnee() >= r.getOrdonnee() 
 				&& getOrdonnee() <= (r.getOrdonnee() + r.getSize());
 		}
-		return false;
 	}
 
 	public void update(int type){
 		switch(type){
-			case 1:
+			case COLLISION_GAUCHE_STABLE:
 				if(getSpeedAbscisse() < 0)
 					setSpeedAbscisse(-getSpeedAbscisse());
 				break;
-			case 2:
+			case COLLISION_GAUCHE_MONTE:
+				if(getSpeedAbscisse() < 0){
+					setSpeedAbscisse(-getSpeedAbscisse());
+					setSpeedOrdonnee(getSpeedOrdonnee() + 1);
+				}
+				break;
+			case COLLISION_GAUCHE_DECEND:
+				if(getSpeedAbscisse() < 0){
+					setSpeedAbscisse(-getSpeedAbscisse());
+					setSpeedOrdonnee(getSpeedOrdonnee() - 1);
+				}
+				break;
+			case COLLISION_DROITE_STABLE:
 				if(getSpeedAbscisse() > 0)
 					setSpeedAbscisse(-getSpeedAbscisse());
 				break;
-			case 3:
+			case COLLISION_DROITE_MONTE:
+				if(getSpeedAbscisse() > 0){
+					setSpeedAbscisse(-getSpeedAbscisse());
+					setSpeedOrdonnee(getSpeedOrdonnee() + 1);
+				}
+				break;
+			case COLLISION_DROITE_DECEND:
+				if(getSpeedAbscisse() > 0){
+					setSpeedAbscisse(-getSpeedAbscisse());
+					setSpeedOrdonnee(getSpeedOrdonnee() - 1);
+				}
+				break;
+			case COLLISION_HAUTE:
 				if(getSpeedOrdonnee() < 0)
 					setSpeedOrdonnee(-getSpeedOrdonnee());
 				break;
-			case 4:
+			case COLLISION_BAS:
 				if(getSpeedOrdonnee() > 0)
 					setSpeedOrdonnee(-getSpeedOrdonnee());
 				break;

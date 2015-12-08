@@ -80,12 +80,7 @@ public abstract class PongObjectAbstract implements PongObjectInterface {
 	protected void move(){
 		int x = getSpeedAbscisse() + getAbscisse();
 		int y = getSpeedOrdonnee() + getOrdonnee();
-
-		/*if(x < 0)
-			x = 0;
-		else if(x > Pong.SIZE_PONG_X)
-			x = Pong.SIZE_PONG_X;*/
-
+		
 		if(y < 0)
 			y = 0;
 		else if(y + getSize() > Pong.SIZE_PONG_Y)

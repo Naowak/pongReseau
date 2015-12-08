@@ -129,13 +129,14 @@ public class Pong extends JPanel implements KeyListener {
     }
 
     public boolean animate() {
-        racket1.update(racketMovement);
-        Integer message = new Integer(racketMovement);
+        int move = racketMovement;
+        racket1.update(move);
+        Integer message = new Integer(move);
         message = (Integer)socket.communicate(message);
         racket2Movement = message;
         racket2.update(racket2Movement); //TODO ENDIT !!!
 
-        if((Instant.now()).isBefore(restartTime)) { //emire tentative d'attente
+        if((Instant.now()).isBefore(restartTime)) { //temps d'attente service
             updateScreen();
             return true; // On continue a jouer
         } else if(ball.getSpeedAbscisse() == 0) {
@@ -149,10 +150,28 @@ public class Pong extends JPanel implements KeyListener {
         }
 
         int ballCollision = Ball.NO_COLLISION;
-        if(ball.collision(racket1))
-            ballCollision = Ball.COLLISION_GAUCHE;
-        if (ball.collision(racket2)) 
-            ballCollision = Ball.COLLISION_DROITE;
+        if(ball.collision(racket1)) {
+            System.out.println("Collision racket 1.");
+            System.out.println("\tPosition:" + racket1.getOrdonnee());
+            System.out.println("\tBall position:" + ball.getAbscisse() + ';' + ball.getOrdonnee());
+            if(move == Racket.MOVE_UP)
+                ballCollision = Ball.COLLISION_GAUCHE_MONTE;
+            if(move == Racket.MOVE_DOWN)
+                ballCollision = Ball.COLLISION_GAUCHE_DECEND;
+            if(move == Racket.DO_NOT_MOVE)
+                ballCollision = Ball.COLLISION_GAUCHE_STABLE;
+        }
+        if (ball.collision(racket2)) {
+            System.out.println("Collision racket 2.");
+            System.out.println("\tPosition:" + racket2.getOrdonnee());
+            System.out.println("\tBall position:" + ball.getAbscisse() + ';' + ball.getOrdonnee());
+            if(racket2Movement == Racket.MOVE_UP)
+                ballCollision = Ball.COLLISION_DROITE_MONTE;
+            if(racket2Movement == Racket.MOVE_DOWN)
+                ballCollision = Ball.COLLISION_DROITE_DECEND;
+            if(racket2Movement == Racket.DO_NOT_MOVE)
+                ballCollision = Ball.COLLISION_DROITE_STABLE;
+        }
         if(ball.getOrdonnee() <= (ball.getImageHeigth() / 2))
             ballCollision = Ball.COLLISION_HAUTE;
         if (ball.getOrdonnee() >= SIZE_PONG_Y - (ball.getImageHeigth() / 2)) 
@@ -165,11 +184,11 @@ public class Pong extends JPanel implements KeyListener {
         if (ball.getAbscisse() >= SIZE_PONG_X)
             pointMarque(JOUEUR_GAUCHE);
 
-        if(pointsJoueurGauche > 2) {
+        if(pointsJoueurGauche > 7) {
             printVictoire(JOUEUR_GAUCHE);
             return false; // Fin du jeu
         } 
-        if(pointsJoueurDroite > 2) {
+        if(pointsJoueurDroite > 7) {
             printVictoire(JOUEUR_DROITE);
             return false; // Fin du jeu
         }
