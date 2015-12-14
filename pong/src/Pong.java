@@ -262,8 +262,6 @@ public class Pong extends JPanel implements KeyListener {
             case KeyEvent.VK_KP_UP:
             case KeyEvent.VK_Z:
             case KeyEvent.VK_W:
-                racketMovement = Racket.DO_NOT_MOVE;
-                break;
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_KP_DOWN:
             case KeyEvent.VK_S:
