@@ -59,7 +59,6 @@ public class Ball extends PongObjectAbstract {
 
 	public void update(int type){
 		switch(type){
-			case COLLISION_GAUCHE:
 			case COLLISION_GAUCHE_STABLE:
 				if(getSpeedAbscisse() < 0)
 					setSpeedAbscisse(-getSpeedAbscisse());
@@ -76,7 +75,6 @@ public class Ball extends PongObjectAbstract {
 					setSpeedOrdonnee(getSpeedOrdonnee() - 1);
 				}
 				break;
-			case COLLISION_DROITE:
 			case COLLISION_DROITE_STABLE:
 				if(getSpeedAbscisse() > 0)
 					setSpeedAbscisse(-getSpeedAbscisse());
