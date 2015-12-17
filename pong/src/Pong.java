@@ -70,16 +70,6 @@ public class Pong extends JPanel implements KeyListener {
     public Image imagePoints2;
 
     /**
-     * Object : Affichage de la win
-     */
-    public Image imageWin;
-
-    /**
-     * Object : Affichage de la lose
-     */
-    public Image imageLose;
-
-    /**
      * Pixel data buffer for the Pong rendering
      */
     private Image buffer = null;
@@ -131,10 +121,6 @@ public class Pong extends JPanel implements KeyListener {
                             ClassLoader.getSystemResource("image/0_rouge.png"));
         imagePoints2 = Toolkit.getDefaultToolkit().createImage(
                             ClassLoader.getSystemResource("image/0_vert.png"));
-        imageWin = Toolkit.getDefaultToolkit().createImage(
-                            ClassLoader.getSystemResource("image/win-baby.jpg"));
-        imageLose = Toolkit.getDefaultToolkit().createImage(
-                            ClassLoader.getSystemResource("image/tmpLose.jpg"));
 
         this.setPreferredSize(new Dimension(SIZE_PONG_X, SIZE_PONG_Y));
         this.addKeyListener(this);
@@ -199,7 +185,7 @@ public class Pong extends JPanel implements KeyListener {
             pointMarque(JOUEUR_GAUCHE);
 
         if(pointsJoueurGauche > 7) {
-            updateScreenVictory();;
+            updateScreenVictory();
             return false; // Fin du jeu
         } 
         if(pointsJoueurDroite > 7) {
@@ -290,15 +276,12 @@ public class Pong extends JPanel implements KeyListener {
     }
 
     public void updateScreenVictory(){
-        /* Fill the area with grey */
-        graphicContext.setColor(backgroundColor); 
-        graphicContext.fillRect(0, 0, SIZE_PONG_X, SIZE_PONG_Y);
-
-        /* Draw items */
         if(pointsJoueurGauche > 7)
-            graphicContext.drawImage(imageWin, 0, 0, 800, 600, null);
+            graphicContext.setColor(new Color(0xFF, 0x00, 0x00)); 
         else
-            graphicContext.drawImage(imageLose, 0, 0, 800, 600, null);
+            graphicContext.setColor(new Color(0x00, 0xFF, 0x00)); 
+
+        graphicContext.fillRect(0, 0, SIZE_PONG_X, SIZE_PONG_Y);
 
         this.repaint();
     }
