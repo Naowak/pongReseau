@@ -91,11 +91,6 @@ public class Pong extends JPanel implements KeyListener {
      * Temps avant lequel la balel ne bouge pas
      */
     private Instant restartTime;
-    /**
-     * La balle ne part que si ce bolleen est a vrai
-     */
-    private boolean weCanGo;
-
 
     private Sock socket;
 
@@ -112,7 +107,6 @@ public class Pong extends JPanel implements KeyListener {
         pointsJoueurGauche = 0;
         pointsJoueurGauche = 0;
         restartTime = (Instant.now()).plusSeconds(2);
-        weCanGo = false;
 
         racket1 = new Racket(20, (SIZE_PONG_Y / 2) - 50, 1);
         racket2 = new Racket(SIZE_PONG_X - 20 - 1, (SIZE_PONG_Y / 2) - 50, 2);
