@@ -70,6 +70,16 @@ public class Pong extends JPanel implements KeyListener {
     public Image imagePoints2;
 
     /**
+     * Object : Affichage de la win
+     */
+    public Image imageWin;
+
+    /**
+     * Object : Affichage de la lose
+     */
+    public Image imageLose;
+
+    /**
      * Pixel data buffer for the Pong rendering
      */
     private Image buffer = null;
@@ -121,6 +131,10 @@ public class Pong extends JPanel implements KeyListener {
                             ClassLoader.getSystemResource("image/0_rouge.png"));
         imagePoints2 = Toolkit.getDefaultToolkit().createImage(
                             ClassLoader.getSystemResource("image/0_vert.png"));
+        imageWin = Toolkit.getDefaultToolkit().createImage(
+                            ClassLoader.getSystemResource("image/win-baby.jpg"));
+        imageLose = Toolkit.getDefaultToolkit().createImage(
+                            ClassLoader.getSystemResource("image/tmpLose.jpg"));
 
         this.setPreferredSize(new Dimension(SIZE_PONG_X, SIZE_PONG_Y));
         this.addKeyListener(this);
@@ -132,7 +146,7 @@ public class Pong extends JPanel implements KeyListener {
         Integer message = new Integer(move);
         message = (Integer)socket.communicate(message);
         racket2Movement = message;
-        racket2.update(racket2Movement); //TODO ENDIT !!!
+        racket2.update(racket2Movement); 
 
         if((Instant.now()).isBefore(restartTime)) { //temps d'attente service
             updateScreen();
@@ -148,18 +162,7 @@ public class Pong extends JPanel implements KeyListener {
         }
 
         int ballCollision = Ball.NO_COLLISION;
-        /*if(ball.collision(racket1)){
-            ballCollision = Ball.COLLISION_GAUCHE;
-            System.out.println("Collision racket 1.");
-            System.out.println("\tPosition:" + racket1.getOrdonnee());
-            System.out.println("\tBall position:" + ball.getAbscisse() + ';' + ball.getOrdonnee());
-        }
-        if(ball.collision(racket2)){
-            ballCollision = Ball.COLLISION_DROITE;
-            System.out.println("Collision racket 2.");
-            System.out.println("\tPosition:" + racket2.getOrdonnee());
-            System.out.println("\tBall position:" + ball.getAbscisse() + ';' + ball.getOrdonnee());
-        }*/        
+
         if(ball.collision(racket1)) {
             System.out.println("Collision racket 1.");
             System.out.println("\tPosition:" + racket1.getOrdonnee());
@@ -196,13 +199,11 @@ public class Pong extends JPanel implements KeyListener {
             pointMarque(JOUEUR_GAUCHE);
 
         if(pointsJoueurGauche > 7) {
-            printVictoire(JOUEUR_GAUCHE);
-            //socket.endOfGame();
+            updateScreenVictory();;
             return false; // Fin du jeu
         } 
         if(pointsJoueurDroite > 7) {
-            printVictoire(JOUEUR_DROITE);
-            //socket.endOfGame();
+            updateScreenVictory();
             return false; // Fin du jeu
         }
 
@@ -210,20 +211,6 @@ public class Pong extends JPanel implements KeyListener {
         return true; // On continue a jouer
     }
 
-    public void printVictoire(int gagnant) {
-        graphicContext.setColor(backgroundColor); 
-        graphicContext.fillRect(0, 0, SIZE_PONG_X, SIZE_PONG_Y);
-        Image panda;
-        if(gagnant == JOUEUR_GAUCHE)
-            panda = Toolkit.getDefaultToolkit().createImage(
-                             ClassLoader.getSystemResource("image/youWin.png"));
-        else
-            panda = Toolkit.getDefaultToolkit().createImage(
-                            ClassLoader.getSystemResource("image/youLose.png"));
-        graphicContext.drawImage(panda, 0, 0, SIZE_PONG_X, SIZE_PONG_Y, null);
-
-        this.repaint();
-    }
 
     public void pointMarque(int joueur) {
         ball.setSpeedAbscisse(0);
@@ -300,6 +287,20 @@ public class Pong extends JPanel implements KeyListener {
     @Override
     public void paint(Graphics g) {
         g.drawImage(buffer, 0, 0, this);
+    }
+
+    public void updateScreenVictory(){
+        /* Fill the area with grey */
+        graphicContext.setColor(backgroundColor); 
+        graphicContext.fillRect(0, 0, SIZE_PONG_X, SIZE_PONG_Y);
+
+        /* Draw items */
+        if(pointsJoueurGauche > 7)
+            graphicContext.drawImage(imageWin, 0, 0, 800, 600, null);
+        else
+            graphicContext.drawImage(imageLose, 0, 0, 800, 600, null);
+
+        this.repaint();
     }
 
     public void updateScreen() {
