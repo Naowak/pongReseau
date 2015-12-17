@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.net.SocketException;
 
+import pong.src.Pong;
+
 public class Sock{
 
 	public Sock(String ipv4){
@@ -74,8 +76,10 @@ public class Sock{
 		Object uselessObject = (Object)uselessInteger;
 		try{
 			oos.writeObject(uselessObject);
-			/*oos.writeObject(uselessObject);
-			oos.writeObject(uselessObject);*/
+			Thread.sleep(Pong.timestep);
+			oos.writeObject(uselessObject);
+			Thread.sleep(Pong.timestep);
+			oos.writeObject(uselessObject);
 		} catch (SocketException e){
 			System.out.println("Your partner just leaved the game.");
 			System.exit(1);
