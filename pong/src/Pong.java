@@ -148,7 +148,7 @@ public class Pong extends JPanel implements KeyListener {
         }
 
         int ballCollision = Ball.NO_COLLISION;
-        if(ball.collision(racket1)){
+        /*if(ball.collision(racket1)){
             ballCollision = Ball.COLLISION_GAUCHE;
             System.out.println("Collision racket 1.");
             System.out.println("\tPosition:" + racket1.getOrdonnee());
@@ -159,8 +159,8 @@ public class Pong extends JPanel implements KeyListener {
             System.out.println("Collision racket 2.");
             System.out.println("\tPosition:" + racket2.getOrdonnee());
             System.out.println("\tBall position:" + ball.getAbscisse() + ';' + ball.getOrdonnee());
-        }            
-        /*if(ball.collision(racket1)) {
+        }*/        
+        if(ball.collision(racket1)) {
             System.out.println("Collision racket 1.");
             System.out.println("\tPosition:" + racket1.getOrdonnee());
             System.out.println("\tBall position:" + ball.getAbscisse() + ';' + ball.getOrdonnee());
@@ -181,7 +181,8 @@ public class Pong extends JPanel implements KeyListener {
                 ballCollision = Ball.COLLISION_DROITE_DECEND;
             if(racket2Movement == Racket.DO_NOT_MOVE)
                 ballCollision = Ball.COLLISION_DROITE_STABLE;
-        }*/
+        }
+        
         if(ball.getOrdonnee() <= (ball.getImageHeigth() / 2))
             ballCollision = Ball.COLLISION_HAUTE;
         if (ball.getOrdonnee() >= SIZE_PONG_Y - (ball.getImageHeigth() / 2)) 
