@@ -105,7 +105,7 @@ public class Pong extends JPanel implements KeyListener {
         if(socket.isHost())
             ball = new Ball(40, SIZE_PONG_Y / 2);
         else{
-            ball = new Ball(SIZE_PONG_X - 40, SIZE_PONG_Y / 2);
+            ball = new Ball(SIZE_PONG_X - 40 - 1, SIZE_PONG_Y / 2);
             ball.setSpeedAbscisse(- ball.getSpeedAbscisse());
         }
 
@@ -114,8 +114,8 @@ public class Pong extends JPanel implements KeyListener {
         restartTime = Instant.now();
         weCanGo = false;
 
-        racket1 = new Racket(20, (SIZE_PONG_Y /2) - 50, 1);
-        racket2 = new Racket(SIZE_PONG_X - 20, (SIZE_PONG_Y / 2) - 50, 2);
+        racket1 = new Racket(20, (SIZE_PONG_Y / 2) - 50, 1);
+        racket2 = new Racket(SIZE_PONG_X - 20 - 1, (SIZE_PONG_Y / 2) - 50, 2);
 
         imagePoints1 = Toolkit.getDefaultToolkit().createImage(
                             ClassLoader.getSystemResource("image/0_rouge.png"));
@@ -148,10 +148,18 @@ public class Pong extends JPanel implements KeyListener {
         }
 
         int ballCollision = Ball.NO_COLLISION;
-        if(ball.collision(racket1))
+        if(ball.collision(racket1)){
             ballCollision = Ball.COLLISION_GAUCHE;
-        if(ball.collision(racket2))
+            System.out.println("Collision racket 1.");
+            System.out.println("\tPosition:" + racket1.getOrdonnee());
+            System.out.println("\tBall position:" + ball.getAbscisse() + ';' + ball.getOrdonnee());
+        }
+        if(ball.collision(racket2)){
             ballCollision = Ball.COLLISION_DROITE;
+            System.out.println("Collision racket 2.");
+            System.out.println("\tPosition:" + racket2.getOrdonnee());
+            System.out.println("\tBall position:" + ball.getAbscisse() + ';' + ball.getOrdonnee());
+        }            
         /*if(ball.collision(racket1)) {
             System.out.println("Collision racket 1.");
             System.out.println("\tPosition:" + racket1.getOrdonnee());
@@ -221,7 +229,7 @@ public class Pong extends JPanel implements KeyListener {
         ball.setSpeedOrdonnee(0);
         ball.setPosition(ball.getAbscisse(), SIZE_PONG_Y / 2);
         if(joueur == JOUEUR_GAUCHE){
-            ball.setPosition(SIZE_PONG_X - 40, ball.getOrdonnee());
+            ball.setPosition(SIZE_PONG_X - 40 - 1, ball.getOrdonnee());
             pointsJoueurGauche += 1;
             String newImageFile = "image/";
             newImageFile += Integer.toString(pointsJoueurGauche);
