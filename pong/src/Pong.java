@@ -111,7 +111,7 @@ public class Pong extends JPanel implements KeyListener {
 
         pointsJoueurGauche = 0;
         pointsJoueurGauche = 0;
-        restartTime = Instant.now();
+        restartTime = (Instant.now()).plusSeconds(2);
         weCanGo = false;
 
         racket1 = new Racket(20, (SIZE_PONG_Y / 2) - 50, 1);
