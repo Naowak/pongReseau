@@ -76,9 +76,13 @@ public class Sock{
 		Object uselessObject = (Object)uselessInteger;
 		try{
 			oos.writeObject(uselessObject);
-			Thread.sleep(Pong.timestep);
+			try{
+				Thread.sleep(Pong.timestep);
+			} catch (InterruptedException e) {};
 			oos.writeObject(uselessObject);
-			Thread.sleep(Pong.timestep);
+			try{
+				Thread.sleep(Pong.timestep);
+			} catch (InterruptedException e) {};
 			oos.writeObject(uselessObject);
 		} catch (SocketException e){
 			System.out.println("Your partner just leaved the game.");
