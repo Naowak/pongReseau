@@ -69,6 +69,23 @@ public class Sock{
 		}
 	}
 
+	public void endOfGame(){
+		Integer uselessInteger = new Integer(0);
+		Object uselessObject = (Object)uselessInteger;
+		try{
+			oos.writeObject(uselessObject);
+			/*oos.writeObject(uselessObject);
+			oos.writeObject(uselessObject);*/
+		} catch (SocketException e){
+			System.out.println("Your partner just leaved the game.");
+			System.exit(1);
+		} catch (IOException e) {
+			System.out.println("Error: Sock.communicate: cannot communicate.");
+			System.out.println(e);
+			System.exit(1);
+		}	
+	}
+
 	public boolean isHost(){
 		return servSocket != null;
 	}

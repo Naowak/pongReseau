@@ -182,12 +182,14 @@ public class Pong extends JPanel implements KeyListener {
         if (ball.getAbscisse() >= SIZE_PONG_X)
             pointMarque(JOUEUR_GAUCHE);
 
-        if(pointsJoueurGauche > 7) {
+        if(pointsJoueurGauche > 1) {
             printVictoire(JOUEUR_GAUCHE);
+            socket.endOfGame();
             return false; // Fin du jeu
         } 
-        if(pointsJoueurDroite > 7) {
+        if(pointsJoueurDroite > 1) {
             printVictoire(JOUEUR_DROITE);
+            socket.endOfGame();
             return false; // Fin du jeu
         }
 
