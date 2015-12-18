@@ -78,6 +78,8 @@ public class Pong extends JPanel implements KeyListener {
      */
     private Graphics graphicContext = null;
 
+    private Sound sound;
+
     private int racketMovement  = Racket.DO_NOT_MOVE;
     private int racket2Movement = Racket.DO_NOT_MOVE;
 
@@ -119,6 +121,8 @@ public class Pong extends JPanel implements KeyListener {
 
         this.setPreferredSize(new Dimension(SIZE_PONG_X, SIZE_PONG_Y));
         this.addKeyListener(this);
+
+        sound = new Sound();
     }
 
     public boolean animate() {
@@ -148,6 +152,9 @@ public class Pong extends JPanel implements KeyListener {
             System.out.println("Collision racket 1.");
             System.out.println("\tPosition:" + racket1.getOrdonnee());
             System.out.println("\tBall position:" + ball.getAbscisse() + ';' + ball.getOrdonnee());
+
+            sound.playSound(Sound.BALL_SOUND);
+
             if(move == Racket.MOVE_UP)
                 ballCollision = Ball.COLLISION_GAUCHE_MONTE;
             if(move == Racket.MOVE_DOWN)
@@ -159,6 +166,9 @@ public class Pong extends JPanel implements KeyListener {
             System.out.println("Collision racket 2.");
             System.out.println("\tPosition:" + racket2.getOrdonnee());
             System.out.println("\tBall position:" + ball.getAbscisse() + ';' + ball.getOrdonnee());
+
+            sound.playSound(Sound.BALL_SOUND);
+
             if(racket2Movement == Racket.MOVE_UP)
                 ballCollision = Ball.COLLISION_DROITE_MONTE;
             if(racket2Movement == Racket.MOVE_DOWN)
@@ -180,10 +190,12 @@ public class Pong extends JPanel implements KeyListener {
             pointMarque(JOUEUR_GAUCHE);
 
         if(pointsJoueurGauche > 7) {
+            sound.playSound(Sound.WIN_SOUND);
             updateScreenVictory();
             return false; // Fin du jeu
         } 
         if(pointsJoueurDroite > 7) {
+            sound.playSound(Sound.LOSE_SOUND);
             updateScreenVictory();
             return false; // Fin du jeu
         }
@@ -293,6 +305,7 @@ public class Pong extends JPanel implements KeyListener {
         /* Fill the area with grey */
         graphicContext.setColor(backgroundColor); 
         graphicContext.fillRect(0, 0, SIZE_PONG_X, SIZE_PONG_Y);
+
 
         /* Draw items */
         graphicContext.drawImage(imagePoints1, 
