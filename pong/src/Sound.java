@@ -24,9 +24,9 @@ public class Sound extends Thread{
     }
 
     public void playSound(int sound){
+        stopSound();
     	switch(sound){
     		case 1 :
-    			System.out.println("etape suivante");
     			sound_ball.play();
     			break;
     		case 2 :
@@ -36,5 +36,11 @@ public class Sound extends Thread{
     			sound_lose.play();
     			break;
     	}
+    }
+
+     private void stopSound(){
+        sound_ball.stop();
+        sound_win.stop();
+        sound_lose.stop();
     }
 }
