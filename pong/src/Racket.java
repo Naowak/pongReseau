@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 
 public class Racket extends PongObjectAbstract {
 
-	private static final Point RACKET_SPEED = new Point(0, 4);
+	protected static final Point RACKET_SPEED = new Point(0, 4);
 
 	public static final int DO_NOT_MOVE = 1;
 	public static final int MOVE_UP     = 2;

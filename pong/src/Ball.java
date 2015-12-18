@@ -104,5 +104,18 @@ public class Ball extends PongObjectAbstract {
 		move();
 		//System.out.println(getPosition());
 	}
+
+	@Override
+	protected void move(){
+		int x = getSpeedAbscisse() + getAbscisse();
+		int y = getSpeedOrdonnee() + getOrdonnee();
+		
+		if(y < getImageHeigth() / 2)
+			y = getImageHeigth() / 2;
+		else if(y + (getImageHeigth() / 2) > Pong.SIZE_PONG_Y)
+			y = Pong.SIZE_PONG_Y - (getImageHeigth() / 2);
+
+		setPosition(x,y);
+	}
 }
 
