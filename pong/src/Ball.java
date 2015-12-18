@@ -28,7 +28,6 @@ public class Ball extends PongObjectAbstract {
 
 	public Ball(Point p){
 		setPosition(p);
-		setSize(BALL_SIZE);
 		setSpeed((Point) BALL_SPEED.clone());
 		setBelongsTo(0);
 		setImage(Toolkit.getDefaultToolkit().createImage(
@@ -47,13 +46,13 @@ public class Ball extends PongObjectAbstract {
 			return getAbscisse() - (getImageWidth() / 2) <= r.getAbscisse() + (r.getImageWidth() / 2)
 				&& getAbscisse() - (getImageWidth() / 2) >= r.getAbscisse() - (r.getImageWidth() / 2)
 				&& getOrdonnee() >= r.getOrdonnee() 
-				&& getOrdonnee() <= (r.getOrdonnee() + r.getSize());
+				&& getOrdonnee() <= (r.getOrdonnee() + r.getImageHeigth());
 		}
 		else {
 			return getAbscisse() + (getImageWidth() / 2) >= r.getAbscisse() - (r.getImageWidth() / 2)
 				&& getAbscisse() + (getImageWidth() / 2) <= r.getAbscisse() + (r.getImageWidth() / 2)
 				&& getOrdonnee() >= r.getOrdonnee() 
-				&& getOrdonnee() <= (r.getOrdonnee() + r.getSize());
+				&& getOrdonnee() <= (r.getOrdonnee() + r.getImageHeigth());
 		}
 	}
 
@@ -104,6 +103,19 @@ public class Ball extends PongObjectAbstract {
 		}
 		move();
 		//System.out.println(getPosition());
+	}
+
+	@Override
+	protected void move(){
+		int x = getSpeedAbscisse() + getAbscisse();
+		int y = getSpeedOrdonnee() + getOrdonnee();
+		
+		if(y < getImageHeigth() / 2)
+			y = getImageHeigth() / 2;
+		else if(y + (getImageHeigth() / 2) > Pong.SIZE_PONG_Y)
+			y = Pong.SIZE_PONG_Y - (getImageHeigth() / 2);
+
+		setPosition(x,y);
 	}
 }
 
