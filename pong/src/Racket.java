@@ -8,7 +8,6 @@ import javax.swing.ImageIcon;
 
 public class Racket extends PongObjectAbstract {
 
-	private static final int RACKET_SIZE = 100;
 	private static final Point RACKET_SPEED = new Point(0, 4);
 
 	public static final int DO_NOT_MOVE = 1;
@@ -17,7 +16,6 @@ public class Racket extends PongObjectAbstract {
 
 	public Racket(Point p, int joueur){
 		setPosition(p);
-		setSize(RACKET_SIZE);
 		setSpeed(RACKET_SPEED);
 		setBelongsTo(joueur);
 		if(joueur == 1)

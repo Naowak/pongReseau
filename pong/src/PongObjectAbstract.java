@@ -98,7 +98,6 @@ public abstract class PongObjectAbstract implements PongObjectInterface {
 
 	
 	private Point position; //point le plus hauty d'un objet.
-	private int size; //distance entre le point le plus haut et le plus bas.
 	private Point speed;
 	private int belongsTo;
 	private Image image;
