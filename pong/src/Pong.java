@@ -61,6 +61,14 @@ public class Pong extends JPanel implements KeyListener {
      */
     public Racket racket2;
     /**
+     * Objet : petite raquette frontale joueur 1
+     */
+    public SmallRacket smallRacket1;
+    /**
+     * Objet : petite raquette frontale joueur 2
+     */
+    public SmallRacket smallRacket2;
+    /**
      * Object : Affichage des points du joueur 1
      */
     public Image imagePoints1;
@@ -78,8 +86,10 @@ public class Pong extends JPanel implements KeyListener {
      */
     private Graphics graphicContext = null;
 
-    private int racketMovement  = Racket.DO_NOT_MOVE;
-    private int racket2Movement = Racket.DO_NOT_MOVE;
+    private int racketMovement       = Racket.DO_NOT_MOVE;
+    private int racket2Movement      = Racket.DO_NOT_MOVE;
+    private int smallRacketMovement  = Racket.DO_NOT_MOVE;
+    private int smallRacket2Movement = Racket.DO_NOT_MOVE;
 
     /**
      * Points des joueurs
@@ -112,6 +122,9 @@ public class Pong extends JPanel implements KeyListener {
         racket1 = new Racket(20, (SIZE_PONG_Y / 2) - 50, 1);
         racket2 = new Racket(SIZE_PONG_X - 20 - 1, (SIZE_PONG_Y / 2) - 50, 2);
 
+        smallRacket1 = new SmallRacket(350, (SIZE_PONG_Y / 2) - 25, 1);
+        smallRacket2 = new SmallRacket(SIZE_PONG_X - 350 - 1, (SIZE_PONG_Y / 2) - 25, 2);
+
         imagePoints1 = Toolkit.getDefaultToolkit().createImage(
                             ClassLoader.getSystemResource("image/0_rouge.png"));
         imagePoints2 = Toolkit.getDefaultToolkit().createImage(
@@ -128,6 +141,13 @@ public class Pong extends JPanel implements KeyListener {
         message = (Integer)socket.communicate(message);
         racket2Movement = message;
         racket2.update(racket2Movement); 
+
+        int smallMove = smallRacketMovement;
+        smallRacket1.update(smallMove);
+        message = new Integer(smallMove);
+        message = (Integer)socket.communicate(message);
+        smallRacket2Movement = message;
+        smallRacket2.update(smallRacket2Movement); 
 
         if((Instant.now()).isBefore(restartTime)) { //temps d'attente service
             updateScreen();
@@ -158,6 +178,23 @@ public class Pong extends JPanel implements KeyListener {
             if(racket2Movement == Racket.MOVE_DOWN)
                 ballCollision = Ball.COLLISION_DROITE_DECEND;
             if(racket2Movement == Racket.DO_NOT_MOVE)
+                ballCollision = Ball.COLLISION_DROITE_STABLE;
+        }
+
+        if(ball.collision(smallRacket1)) {
+            if(smallMove == Racket.MOVE_UP)
+                ballCollision = Ball.COLLISION_GAUCHE_MONTE;
+            if(smallMove == Racket.MOVE_DOWN)
+                ballCollision = Ball.COLLISION_GAUCHE_DECEND;
+            if(smallMove == Racket.DO_NOT_MOVE)
+                ballCollision = Ball.COLLISION_GAUCHE_STABLE;
+        }
+        if (ball.collision(smallRacket2)) {
+            if(smallRacket2Movement == Racket.MOVE_UP)
+                ballCollision = Ball.COLLISION_DROITE_MONTE;
+            if(smallRacket2Movement == Racket.MOVE_DOWN)
+                ballCollision = Ball.COLLISION_DROITE_DECEND;
+            if(smallRacket2Movement == Racket.DO_NOT_MOVE)
                 ballCollision = Ball.COLLISION_DROITE_STABLE;
         }
         
@@ -219,15 +256,18 @@ public class Pong extends JPanel implements KeyListener {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
             case KeyEvent.VK_KP_UP:
+                smallRacketMovement = Racket.MOVE_UP;
+                break;
             case KeyEvent.VK_Z:
             case KeyEvent.VK_W:
                 racketMovement = Racket.MOVE_UP;
                 break;
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_KP_DOWN:
+                smallRacketMovement = Racket.MOVE_DOWN;
+                break;
             case KeyEvent.VK_S:
                 racketMovement = Racket.MOVE_DOWN;
-                break;
             default:
                 System.out.println("Pressing this doesn't do anything ......");
         }
@@ -237,13 +277,14 @@ public class Pong extends JPanel implements KeyListener {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
             case KeyEvent.VK_KP_UP:
-            case KeyEvent.VK_Z:
-            case KeyEvent.VK_W:
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_KP_DOWN:
+                smallRacketMovement = Racket.DO_NOT_MOVE;
+                break;
+            case KeyEvent.VK_Z:
+            case KeyEvent.VK_W:
             case KeyEvent.VK_S:
                 racketMovement = Racket.DO_NOT_MOVE;
-                break;
         }
     }
 
@@ -308,6 +349,14 @@ public class Pong extends JPanel implements KeyListener {
                                  racket2.getAbscisse() - (racket2.getImageWidth() / 2),
                                  racket2.getOrdonnee(),
                                  racket2.getImageWidth(), racket2.getImageHeigth(), null);
+        graphicContext.drawImage(smallRacket1.getImage(),
+                                 smallRacket1.getAbscisse() - (smallRacket1.getImageWidth() / 2),
+                                 smallRacket1.getOrdonnee(),
+                                 smallRacket1.getImageWidth(), smallRacket1.getImageHeigth(), null);
+        graphicContext.drawImage(smallRacket2.getImage(),
+                                 smallRacket2.getAbscisse() - (smallRacket2.getImageWidth() / 2),
+                                 smallRacket2.getOrdonnee(),
+                                 smallRacket2.getImageWidth(), smallRacket2.getImageHeigth(), null);
 
         this.repaint();
     }
