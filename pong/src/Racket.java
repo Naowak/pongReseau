@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 
 public class Racket extends PongObjectAbstract {
 
-	protected static final Point RACKET_SPEED = new Point(0, 4);
+	protected static final Point ABS_SPEED = new Point(0, 4);
 
 	public static final int DO_NOT_MOVE = 1;
 	public static final int MOVE_UP     = 2;
@@ -16,7 +16,7 @@ public class Racket extends PongObjectAbstract {
 
 	public Racket(Point p, int joueur){
 		setPosition(p);
-		setSpeed(RACKET_SPEED);
+		setSpeed(ABS_SPEED);
 		setBelongsTo(joueur);
 		if(joueur == 1)
 			setImage(Toolkit.getDefaultToolkit().createImage(
@@ -38,10 +38,10 @@ public class Racket extends PongObjectAbstract {
 				setSpeed(new Point(0, 0));
 				break;
 			case MOVE_UP:
-				setSpeed(new Point((int)RACKET_SPEED.getX(), (int)-RACKET_SPEED.getY()));
+				setSpeed(new Point((int)ABS_SPEED.getX(), (int)-ABS_SPEED.getY()));
 				break;
 			case MOVE_DOWN:
-				setSpeed(new Point((int)RACKET_SPEED.getX(), (int)RACKET_SPEED.getY()));
+				setSpeed(new Point((int)ABS_SPEED.getX(), (int)ABS_SPEED.getY()));
 				break;
 		}
 		move();

@@ -268,6 +268,7 @@ public class Pong extends JPanel implements KeyListener {
                 break;
             case KeyEvent.VK_S:
                 racketMovement = Racket.MOVE_DOWN;
+                break;
             default:
                 System.out.println("Pressing this doesn't do anything ......");
         }
