@@ -77,6 +77,9 @@ public class Pong extends JPanel implements KeyListener {
      */
     public Image imagePoints2;
 
+    private Image imageVictoire;
+    private Image imageDefaite;    
+
     /**
      * Pixel data buffer for the Pong rendering
      */
@@ -133,6 +136,11 @@ public class Pong extends JPanel implements KeyListener {
                             ClassLoader.getSystemResource("image/0_rouge.png"));
         imagePoints2 = Toolkit.getDefaultToolkit().createImage(
                             ClassLoader.getSystemResource("image/0_vert.png"));
+
+        imageVictoire = Toolkit.getDefaultToolkit().createImage(
+                            ClassLoader.getSystemResource("image/youWin.png"));
+        imageDefaite = Toolkit.getDefaultToolkit().createImage(
+                            ClassLoader.getSystemResource("image/youLose.png"));
 
         this.setPreferredSize(new Dimension(SIZE_PONG_X, SIZE_PONG_Y));
         this.addKeyListener(this);
@@ -321,12 +329,16 @@ public class Pong extends JPanel implements KeyListener {
     }
 
     public void updateScreenVictory(){
-        if(pointsJoueurGauche > 7)
+        /*if(pointsJoueurGauche > 7)
             graphicContext.setColor(new Color(0xAA, 0x00, 0x00)); 
         else
-            graphicContext.setColor(new Color(0x00, 0x99, 0x11)); 
-
+            graphicContext.setColor(new Color(0x00, 0x99, 0x11)); */
+        graphicContext.setColor(backgroundColor);
         graphicContext.fillRect(0, 0, SIZE_PONG_X, SIZE_PONG_Y);
+        if(pointsJoueurGauche > 7)
+            graphicContext.drawImage(imageVictoire, 0, 0, SIZE_PONG_X, SIZE_PONG_Y, null);
+        else
+            graphicContext.drawImage(imageDefaite, 0, 0, SIZE_PONG_X, SIZE_PONG_Y, null);
 
         this.repaint();
     }
@@ -340,6 +352,11 @@ public class Pong extends JPanel implements KeyListener {
             else
                 graphicContext = buffer.getGraphics();
         }
+
+
+        graphicContext.drawImage(imageVictoire, 10, 10, 10, 10, null);
+        graphicContext.drawImage(imageDefaite,  10, 10, 10, 10, null);
+
         /* Fill the area with grey */
         graphicContext.setColor(backgroundColor); 
         graphicContext.fillRect(0, 0, SIZE_PONG_X, SIZE_PONG_Y);
@@ -373,6 +390,7 @@ public class Pong extends JPanel implements KeyListener {
                                  smallRacket2.getAbscisse() - (smallRacket2.getImageWidth() / 2),
                                  smallRacket2.getOrdonnee(),
                                  smallRacket2.getImageWidth(), smallRacket2.getImageHeigth(), null);
+
 
         this.repaint();
     }
