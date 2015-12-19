@@ -329,12 +329,9 @@ public class Pong extends JPanel implements KeyListener {
     }
 
     public void updateScreenVictory(){
-        /*if(pointsJoueurGauche > 7)
-            graphicContext.setColor(new Color(0xAA, 0x00, 0x00)); 
-        else
-            graphicContext.setColor(new Color(0x00, 0x99, 0x11)); */
         graphicContext.setColor(backgroundColor);
         graphicContext.fillRect(0, 0, SIZE_PONG_X, SIZE_PONG_Y);
+        
         if(pointsJoueurGauche > 7)
             graphicContext.drawImage(imageVictoire, 0, 0, SIZE_PONG_X, SIZE_PONG_Y, null);
         else
