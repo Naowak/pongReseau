@@ -353,7 +353,13 @@ public class Pong extends JPanel implements KeyListener {
                 graphicContext = buffer.getGraphics();
         }
 
-
+        /* This ... is ... WWWHAHAHAWHAWHAWA ................
+         * The point is that our lib seems to suck. it refuses to draw images
+         * in the updateScreenVictory() if the image has never been draw before
+         * in the program. This is why I draw them here ... before painting all
+         * the screen in grey. If you understand this shit, please contact me,
+         * I'll be realy happy to understand too.............
+         */
         graphicContext.drawImage(imageVictoire, 10, 10, 10, 10, null);
         graphicContext.drawImage(imageDefaite,  10, 10, 10, 10, null);
 
