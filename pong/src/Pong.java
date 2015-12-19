@@ -190,7 +190,8 @@ public class Pong extends JPanel implements KeyListener {
         }
 
         if(ball.collision(smallRacket1)) {
-            sound.playSound(Sound.BALL_SOUND);
+            if(ball.getSpeedAbscisse() < 0)
+                sound.playSound(Sound.BALL_SOUND);
             if(smallMove == Racket.MOVE_UP)
                 ballCollision = Ball.COLLISION_GAUCHE_MONTE;
             if(smallMove == Racket.MOVE_DOWN)
@@ -199,7 +200,8 @@ public class Pong extends JPanel implements KeyListener {
                 ballCollision = Ball.COLLISION_GAUCHE_STABLE;
         }
         if (ball.collision(smallRacket2)) {
-            sound.playSound(Sound.BALL_SOUND);
+            if(ball.getSpeedAbscisse() > 0)
+                sound.playSound(Sound.BALL_SOUND);
             if(smallRacket2Movement == Racket.MOVE_UP)
                 ballCollision = Ball.COLLISION_DROITE_MONTE;
             if(smallRacket2Movement == Racket.MOVE_DOWN)
