@@ -26,46 +26,47 @@ Dans notre pong, chaque joueur contrôle deux raquettes:
 - une principale, d'une largeur semblable à celle d'un Pong traditionnel
 - une secondaire, plus petite et plus proche du centre.
 \\\includegraphics[scale=0.56]{terrain.png}
-\\La raquette secondaire est intelligente: elle ne renvoie pas la balle versson propre camp si elle la frappe par derrière (la raquette représente un joueur, non un mur)
+\\La raquette secondaire est intelligente: elle ne renvoie pas la balle vers son propre camp si elle la frappe par derrière (la raquette représente un joueur, non un mur)
 \paragraph{}
-Le joueur se trouve toujour à gauche de l'écran (le jeu est représenté en mirroir sur chaque machine), il manipule la raquette principae avec Z et S, et la secondaire avec les fleches directionelles haut et bas.
+Le joueur se trouve toujours à gauche de l'écran (le jeu est représenté en miroir sur chaque machine), il manipule la raquette principae avec Z et S, et la secondaire avec les flèches directionelles haut et bas.
 \paragraph{}
-Il suffit de frapper une balle avec une raquette pour la renvoyer, il est néanmois possible de mettre un effet dans la balle en déplaçcant la raquette durant la frappe:
+Il suffit de frapper une balle avec une raquette pour la renvoyer, il est néanmoins possible de mettre un effet dans la balle en déplaçant la raquette durant la frappe:
 \\- Si la raquette va dans le même sens que la balle, cela va rétrécir l'angle de rebond de la balle.
 \\- Si la raquette va dans le sens opposé à celui de la balle, l'angle de rebond sera alors amplifié.
 
 \paragraph{}
-Lors que la balle sort d'un côté de l'écran , le joueur opposé marque un point.
+Lorsque la balle sort d'un côté de l'écran , le joueur opposé marque un point.
 \\La balle se pose ensuite devant le joueur perdant et repart après 2 secondes de pause.
 \paragraph{}
 Le jeu se déroule en 8 points gagnants.
-\\On notera aussi la présence de son lors de la frappe de la balle, l'apparition d'image et son de victoire/défaites.
+\\On notera aussi la présence de son lors de la frappe de la balle et lors d'une victoire/défaite.
 
 
 \section*{Le code}
 \paragraph{}
-À partir du code fournit de base, nous avons en quelques heures (~5h) réussit à mettre le jeu en réseau, et à transformer un code très «impératif» en un code plus «objet».
+À partir du code fournit de base, nous avons en quelques heures (~5h) réussi à mettre le jeu en réseau, et à transformer un code très «impératif» en un code plus «objet».
 Les premières difficultées arrivent alors:
 \\- Impossible d'afficher des images de vitoire et de défaites.
-\\- Après plusieurs échanges, les jeux se désyncronisaient sur les eeux machines.
+\\- Après plusieurs échanges, les jeux se désyncronisaient sur les deux machines.
 \subsubsection*{LE BUG DES IMAGES DE LA MORT QUI TUE}
 \paragraph{}
-Alors qu'à chaque frame nous affichions avec success toutes les images (balle, raquettes, tableau des scores), les images de fin (victoire/défaite) refusaient de s'afficher à la dernirèe image.
-\\Si l'on ne pouvait pas afficher victoire.png à la fin, on réussissait néanmoisn à afficher ball.png à la fin, ou tout autres images utilisée ailleur dans le jeu.
+Alors qu'à chaque frame nous affichions avec succès toutes les images (balle, raquettes, tableau des scores), les images de fin (victoire/défaite) refusaient de s'afficher à la dernière image.
+\\Si l'on ne pouvait pas afficher victoire.png à la fin, on réussissait néanmoins à afficher ball.png à la fin, ou tout autres images utilisées ailleur dans le jeu.
 \\Nous avons donc essayé d'afficher victoire.png autre part qu'à la fin (en fond d'écran par exemple), et là, l'affichage fonctionnait.
-\\Nous etions capables d'afficher certaines images mais pas toutes, et pouratant nos images étaient bonnes pouisse que l'on pouvait les afficher en cour de jeu.
+\\Nous étions capables d'afficher certaines images mais pas toutes, et pourtant nos images étaient bonnes puisque l'on pouvait les afficher en cours de jeu.
 \paragraph{}
-S'en suit donc un débuggage intensif sur plusieurs semaines, on estime un total de 7h30 de travail chaqu'un sur ce seul bug. 7h30 où nous avons tenté tout etn'importe quoi: changer le nom des variables, des fichiers, réduie la quelité des images, les afficher en plus petit ... Certain test nous ont même poussés à croire que les images ne s'affichaient que si leur affichage était ordonné en dehors d'un «if» ...
-\\Partant fouiller dans l'arbre d'héritage de JPanel (dont notre Pong hérite) pour comprendre quels effets complexes pouvaient avoir les fonctions que l'on redéfinissait, certaines agissaient différement avec les images lourdes et les images légères. Mais ça ne nous aida pas à résondre notre problème.
+S'en suit donc un débuggage intensif sur plusieurs jours, on estime un total de 7h30 de travail chacun sur ce seul bug. 7h30 où nous avons tenté tout et n'importe quoi : changer le nom des variables, des fichiers, réduire la qualité des images, les afficher en plus petit ... Certain test nous ont même poussés à croire que les images ne s'affichaient que si leur affichage était ordonné en dehors d'un «if» ...
+\\Partant fouiller dans l'arbre d'héritage de JPanel (dont notre Pong hérite) pour comprendre quels effets complexes pouvaient avoir les fonctions que l'on redéfinissait, certaines agissaient différement avec les images lourdes et les images légères. Mais ça ne nous aida pas à résoudre notre problème.
 \\Et c'est seulement après ces nombreuses heures érintantes que nous finisson par trouver quelque chose:
 \\Une image s'affiche à la fin seulement si elle à déjà été affichée plus tôt dans le jeu. Pourquoi?... Aucune idée, mais ça ce passait comme ça.
 \paragraph{}
-Solution : Mettre su scotch, c'est à dire : A chaque frame on affiche les images de victoire/défaite, puis on peint tout l'écran en gris, puis on affiche les raquettesb la balle.\\
+Solution : Mettre du scotch, c'est à dire : A chaque frame on affiche les images de victoire/défaite, puis on peint tout l'écran en gris, puis on affiche les raquettes et la balle.\\
 Comme ça à la fin, on affiche l'image de victoire ou de défaite qui a déjà été affichée ... et qui donc ne bug pas.
+Nous avons aussi essayé d'afficher deux fois successivement l'image mais sans succès, ou même de l'afficher dans le constructeur de la classe. Mais sans succès non plus.
 \subsubsection*{La syncronisation}
 \paragraph{}
-Pour synchroniser nos machine on établie un protocole simpliste:
-À chaque frame de joueur appuie sur une touche (ou sur aucune), doinc à chaque frame chaque machine fait:
+Pour synchroniser nos machines on établie un protocole simpliste:
+À chaque frame le joueur appuie sur une touche (ou sur aucune), donc à chaque frame chaque machine fait:
 \\Un write() qui contient la(les) touche(s) sur la(es)quel(s) il appuie.
 \\Puis tout de suite, un read() BLOQUANT pour recevoir le write() de son adversaire.
 \paragraph{}
@@ -102,7 +103,7 @@ Le seul arbre d'héritage est celui des «PongObjects» :
 \end{tikzpicture}
 
 \section*{Conclusion}
-Bref, le programme fonctionne, il est assez sobre, et assez rapide entre deux machines du CREMI, mais lague fortement sur nos réseau domestiques.\\
+Bref, le programme fonctionne, il est assez sobre, et assez rapide entre deux machines du CREMI, mais lag fortement sur nos réseaux domestiques.\\
 Le jeu est simple à comprendre, sans fioritures. Mais il y peut y avoir une «courbe de progression» avec la gestion des effets.\\
 La triche n'est pas possible, et les données échangées sont légères.
 Et en plus, il y des pandas roux.
