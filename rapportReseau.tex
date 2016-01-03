@@ -78,11 +78,14 @@ La encore plusieurs heures de debugging pour traquer le bug. En fait, l'erreur �
 
 \section*{Diagramme des classes}
 \paragraph{}
-Le diagramme de classe est assez simple. La plupart des classes sont seules : \\Sock (qui gère la communication) ;\\
-Window (qui affiche a l'ecran et fait un while() qui contient le jeu) qui étend JFrame (librairie java standard); \\
-Main ;\\
-Pong (qui contient le jeu en soit) qui étend JPanel et implémente KeyListener (librairie Java standard); \\
-Sound (qui fait les sons) qui étend Thread (librairie Java standard).
+Le diagramme de classe est assez simple. La plupart des classes sont seules : 
+\begin{itemize}
+\item Sock (qui gère la communication) ;
+\item Window (qui affiche a l'ecran et fait un while() qui contient le jeu) qui étend JFrame (librairie java standard)
+\item Main
+\item Pong (qui contient le jeu en soit) qui étend JPanel et implémente KeyListener (librairie Java standard)
+\item Sound (qui fait les sons) qui étend Thread (librairie Java standard).
+\end{itemize}
 \newpage
 \paragraph{}
 Le seul arbre d'héritage est celui des «PongObjects» :
